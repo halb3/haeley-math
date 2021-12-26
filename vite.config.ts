@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import git from 'git-rev-sync';
 
 import { defineConfig, UserConfigExport } from 'vite';
-import { visualizer } from 'rollup-plugin-visualizer';
+// import { visualizer } from 'rollup-plugin-visualizer';
 
 const root = resolve(__dirname, 'source');
 const outDir = resolve(__dirname, 'dist');
@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => {
             __LIB_NAME__: JSON.stringify(process.env.npm_package_name),
             __LIB_VERSION__: JSON.stringify(process.env.npm_package_version),
         },
-        plugins: [visualizer()]
+        // plugins: [visualizer()]
     };
 
     switch (mode) {
