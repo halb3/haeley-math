@@ -38,8 +38,9 @@
 </body>
 
 <script type="module">
+    import * as auxiliaries from 'haeley-auxiliaries';
     import * as math from './index.ts';
-    window['haeley'] = { math: math };
+    window['haeley'] = { auxiliaries: auxiliaries, math: math };
 </script>
 
 <script>
