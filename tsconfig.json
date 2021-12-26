@@ -8,18 +8,19 @@
             "es2020"
         ],
         "outDir": "dist",
-        "allowSyntheticDefaultImports": false,
+        "allowSyntheticDefaultImports": true,
         "alwaysStrict": true,
         "declaration": true,
-        "declarationDir": "dist/types",
         "experimentalDecorators": true,
+        "moduleResolution": "node",
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": false,
         "preserveConstEnums": true,
         "removeComments": false,
+        "resolveJsonModule": true,
         "skipLibCheck": true,
-        "sourceMap": true,
+        "sourceMap": false,
         "strictNullChecks": true
     },
     "typedocOptions": {
@@ -35,6 +36,7 @@
     ],
     "exclude": [
         "node_modules",
-        "dist"
+        "dist",
+        "source/**/*.json"
     ]
 }

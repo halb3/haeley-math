@@ -8,8 +8,6 @@ const root = resolve(__dirname, 'source');
 const outDir = resolve(__dirname, 'dist');
 
 
-/*eslint no-unused-vars: ["error", {"args": "after-used"}]*/
-
 export default defineConfig(({ mode }) => {
 
     const config: UserConfigExport = {
@@ -18,37 +16,18 @@ export default defineConfig(({ mode }) => {
             outDir,
             lib: {
                 entry: resolve(root, 'index.ts'),
-                name: 'haeley-math'
-            }//,
-            // sourcemap: true,
-            // rollupOptions: {
-            //     external: ['rxjs'],
-            //     output: {
-            //         globals: {
-            //             rxjs: 'rxjs'
-            //         }
-            //     }
-            // }
+                name: 'haeley-math',
+                formats: ['cjs', 'umd', 'es'],
+            },
+            sourcemap: 'hidden',
         },
         define: {
             __GIT_COMMIT__: JSON.stringify(git.short(__dirname)),
             __GIT_BRANCH__: JSON.stringify(git.branch(__dirname)),
             __LIB_NAME__: JSON.stringify(process.env.npm_package_name),
             __LIB_VERSION__: JSON.stringify(process.env.npm_package_version),
-            __DISABLE_ASSERTIONS__: JSON.stringify(false),
-            __LOG_VERBOSITY_THRESHOLD__: JSON.stringify(3)
-        }
+        },
     };
-
-    // switch (command) {
-
-    //     case 'serve':
-    //         break;
-
-    //     case 'build':
-    //     default:
-    //         break;
-    // }
 
     switch (mode) {
 
@@ -56,7 +35,7 @@ export default defineConfig(({ mode }) => {
             config.build.outDir = outDir;
             break;
 
-        case 'production': // build specific config
+        case 'production':
         default:
             config.build.emptyOutDir = true;
             config.define.__DISABLE_ASSERTIONS__ = JSON.stringify(true);
