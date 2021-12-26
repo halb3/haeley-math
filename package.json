@@ -55,7 +55,6 @@
         "typescript": "^4.5.4",
         "vite": "^2.7.6"
     },
-    "peerDependencies": {},
     "scripts": {
         "build": "vite build && tsc --emitDeclarationOnly",
         "build:dev": "vite dev",

@@ -48,8 +48,6 @@ export default defineConfig(({ mode }) => {
         case 'production':
         default:
             config.build.emptyOutDir = true;
-            config.define.__DISABLE_ASSERTIONS__ = JSON.stringify(true);
-            config.define.__LOG_VERBOSITY_THRESHOLD__ = JSON.stringify(2);
             break;
     }
 
