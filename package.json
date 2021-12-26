@@ -1,6 +1,6 @@
 {
     "name": "haeley-math",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "license": "MIT",
     "description": "gl-matrix extension providing useful math for the haeley real-time rendering framework.",
     "author": "Daniel Limberger",
@@ -56,8 +56,7 @@
         "typescript": "^4.5.4",
         "vite": "^2.7.6"
     },
-    "peerDependencies": {
-    },
+    "peerDependencies": {},
     "scripts": {
         "build": "vite build && tsc --emitDeclarationOnly",
         "build:dev": "vite dev",
