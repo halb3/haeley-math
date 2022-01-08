@@ -1,11 +1,12 @@
 
 /* spellchecker: disable */
 
-import { DEG2RAD, log, LogLevel, RAD2DEG } from 'haeley-auxiliaries';
+import { log, LogLevel } from 'haeley-auxiliaries';
 
 import { mat4, vec3 } from 'gl-matrix';
 import { m4 } from './gl-matrix-extensions';
 
+import { DEG2RAD, RAD2DEG } from './auxiliaries';
 import { duplicate2, GLsizei2 } from './tuples';
 
 /* spellchecker: enable */

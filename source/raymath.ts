@@ -1,11 +1,10 @@
 
 /* spellchecker: disable */
 
-import { DEG2RAD } from 'haeley-auxiliaries';
-
 import { mat4, vec2, vec3 } from 'gl-matrix';
-import { abs2, abs3, sign, v2, v3 } from './gl-matrix-extensions';
+import { abs2, abs3, v2, v3 } from './gl-matrix-extensions';
 
+import { DEG2RAD, sign, } from './auxiliaries';
 import { Camera } from './camera';
 
 /* spellchecker: enable */

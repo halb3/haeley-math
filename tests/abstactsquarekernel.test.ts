@@ -10,7 +10,7 @@ import {
     KernelF32, KernelI8, KernelUI32, KernelI32, KernelUI8, KernelJSON, SortApproach
 } from '../source/kernel';
 
-describe('PrimitiveKernels', () => {
+describe('Primitive Kernels', () => {
 
     it('function position to never fail and return undefined', () => {
         const kernel32fArray = [new KernelF32(1, 1), new KernelF32(2, 2, 2), new KernelF32(4, 4, 4, 4)];

@@ -1,8 +1,9 @@
 
 /* spellchecker: disable */
 
-import { assert, rand } from 'haeley-auxiliaries';
+import { assert } from 'haeley-auxiliaries';
 
+import { rand } from './auxiliaries';
 import { KernelF32 } from './kernel';
 
 /* spellchecker: enable */

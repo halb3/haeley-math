@@ -12,9 +12,9 @@ import * as rayMath from '../source/raymath';
 
 /* tslint:disable:no-unused-expression */
 
-describe('Ray Math', () => {
+describe('Ray Math ray plane intersection', () => {
 
-    it('ray plane intersection should return undefined intersection, when there is none', () => {
+    it('should return undefined intersection, when there is none', () => {
         const ray0 = [vec3.fromValues(0.0, 0.0, 0.0), vec3.fromValues(-1.0, 0.0, 1.0)];
         const ray1 = [vec3.fromValues(0.0, 0.0, 0.0), vec3.fromValues(-1.0, 0.0, 1.0)];
 
@@ -24,7 +24,7 @@ describe('Ray Math', () => {
         }
     });
 
-    it('ray plane intersection should result in straight lines, since direction stays within plane', () => {
+    it('should result in straight lines, since direction stays within plane', () => {
         const ray0 = [vec3.fromValues(+1.0, 0.0, 0.0), vec3.fromValues(0.0, 0.0, +1.0)];
         const ray1 = [vec3.fromValues(-1.0, 0.0, 0.0), vec3.fromValues(0.0, 0.0, -1.0)];
 
@@ -34,7 +34,7 @@ describe('Ray Math', () => {
         }
     });
 
-    it('ray plane intersection should account for constrained intersections, e. g., ray from below', () => {
+    it('should account for constrained intersections, e. g., ray from below', () => {
         const ray0 = [vec3.fromValues(0.0, -1.0, 0.0)];
         const ray1 = [vec3.fromValues(0.0, +1.0, 0.0)];
 
@@ -44,7 +44,7 @@ describe('Ray Math', () => {
         }
     });
 
-    it('ray plane intersection should return valid intersections', () => {
+    it('should return valid intersections', () => {
         const ray0 = new Array<vec3>();
         const ray1 = new Array<vec3>();
         const expected = new Array<vec3>();
@@ -64,7 +64,7 @@ describe('Ray Math', () => {
         }
     });
 
-    it('ray plane intersection should return undefined intersection, invalid ray is provided', () => {
+    it('should return undefined intersection, invalid ray is provided', () => {
         const ray0 = [vec3.fromValues(0.0, 1.0, 0.0)];
         const ray1 = [vec3.fromValues(0.0, 1.0, 0.0)];
 
@@ -74,7 +74,12 @@ describe('Ray Math', () => {
         }
     });
 
-    it('point-within-square evaluation should be positive for the center as well as points on edges', () => {
+});
+
+
+describe('Ray Math point-within-square evaluation', () => {
+
+    it('should be positive for the center as well as points on edges', () => {
         const points: Array<vec2> = [
             vec2.fromValues(+1.0, +1.0),
             vec2.fromValues(+1.0, +0.0),
@@ -91,7 +96,7 @@ describe('Ray Math', () => {
         }
     });
 
-    it('point-within-square evaluation should be positive for the center as well as points on edges', () => {
+    it('should be positive for the center as well as points on edges', () => {
         const points: Array<vec2> = [
             vec2.fromValues(+1.0, +1.0),
             vec2.fromValues(+1.0, +0.0),
@@ -108,7 +113,7 @@ describe('Ray Math', () => {
         }
     });
 
-    it('point-within-square evaluation should be negative for points outside the square', () => {
+    it('should be negative for points outside the square', () => {
         const e = 1.0 + 0.000001;
         const points: Array<vec2> = [
             vec2.fromValues(+e, +e),
@@ -125,7 +130,7 @@ describe('Ray Math', () => {
         }
     });
 
-    it('point-within-square evaluation should be positive for points within the square', () => {
+    it('should be positive for points within the square', () => {
         const points: Array<vec2> = [
             vec2.fromValues(+0.5, +0.5),
             vec2.fromValues(+0.5, +0.0),
@@ -142,7 +147,12 @@ describe('Ray Math', () => {
         }
     });
 
-    it('ray circle intersection should return undefined intersection, when there is none', () => {
+});
+
+
+describe('Ray Math ray circle intersection', () => {
+
+    it('should return undefined intersection, when there is none', () => {
         const ray0 = new Array<vec2>();
         const ray1 = new Array<vec2>();
 
@@ -157,7 +167,7 @@ describe('Ray Math', () => {
         }
     });
 
-    it('ray circle intersection should return valid intersection points', () => {
+    it('should return valid intersection points', () => {
         const ray0 = new Array<vec2>();
         const ray1 = new Array<vec2>();
         const expected = new Array<vec2>();

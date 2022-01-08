@@ -4,7 +4,9 @@
 import { assert, logIf, LogLevel } from 'haeley-auxiliaries';
 
 import { vec2, vec3, vec4 } from 'gl-matrix';
-import { clamp, clamp2, clamp3, clamp4 } from './gl-matrix-extensions';
+import { clamp2, clamp3, clamp4 } from './gl-matrix-extensions';
+
+import { clamp } from './auxiliaries';
 
 /* spellchecker: enable */
 

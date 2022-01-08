@@ -7,46 +7,19 @@ import { mat2, mat3, mat4, vec2, vec3, vec4 } from 'gl-matrix';
 
 import {
     abs2, abs3, abs4,
-    clamp, clamp2, clamp3, clamp4,
+    clamp2, clamp3, clamp4,
     decode_float24x1_from_uint8x3, decode_uint24_from_rgb8, decode_uint32_from_rgba8,
     encode_float24x1_to_uint8x3, encode_uint24_to_rgb8, encode_uint32_to_rgba8,
-    fract, fromVec3, fromVec4,
+    fromVec3, fromVec4,
     m2, m3, m4,
-    mix,
     parseVec2, parseVec3, parseVec4,
-    sign,
     v2, v3, v4,
 } from '../source/gl-matrix-extensions';
 
 /* spellchecker: enable */
 
 
-describe('gl-matrix extensions sign', () => {
-
-    it('should return the sign of a number as specified in GLSL', () => {
-        expect(sign(-1.0)).to.equal(-1.0);
-        expect(sign(-23.0)).to.equal(-1.0);
-
-        expect(sign(0.0)).to.equal(0.0);
-
-        expect(sign(+1.0)).to.equal(+1.0);
-        expect(sign(+42.0)).to.equal(+1.0);
-    });
-
-});
-
-
 describe('gl-matrix extensions clamp', () => {
-
-    it('should clamp a number as specified in GLSL', () => {
-        expect(clamp(+3, +0, +2)).to.equal(+2);
-        expect(clamp(+1, +0, +2)).to.equal(+1);
-        expect(clamp(-1, +0, +2)).to.equal(+0);
-
-        expect(clamp(-3, -2, -0)).to.equal(-2);
-        expect(clamp(-1, -2, -0)).to.equal(-1);
-        expect(clamp(+1, -2, -0)).to.equal(-0);
-    });
 
     it('should clamp a vec2 as specified in GLSL', () => {
         let a: vec2 = vec2.fromValues(2, 2);
@@ -123,26 +96,6 @@ describe('gl-matrix extensions abs', () => {
 
 
 describe('gl-matrix extensions', () => {
-
-    it('should calculate the fraction of a positive or negative number', () => {
-        expect(fract(+1.0)).to.equal(0.0);
-        expect(fract(-1.0)).to.equal(0.0);
-
-        expect(fract(0.0)).to.equal(0.0);
-
-        expect(fract(+0.1)).to.closeTo(+0.1, 1e-8);
-        expect(fract(+1.2)).to.closeTo(+0.2, 1e-8);
-        expect(fract(-1.3)).to.closeTo(-0.3, 1e-8);
-    });
-
-    it('should mix two numbers as specified in GLSL', () => {
-        expect(mix(+1.0, +2.0, 0.0)).to.closeTo(+1.0, 1e-8);
-        expect(mix(+1.0, +2.0, 1.0)).to.closeTo(+2.0, 1e-8);
-        expect(mix(+1.0, +2.0, 0.5)).to.closeTo(+1.5, 1e-8);
-        expect(mix(+2.0, +1.0, 0.0)).to.closeTo(+2.0, 1e-8);
-        expect(mix(-2.0, +2.0, 0.5)).to.closeTo(+0.0, 1e-8);
-        expect(mix(-2.0, -4.0, 0.5)).to.closeTo(-3.0, 1e-8);
-    });
 
     it('should derive a vec3 from vec4 with division by w component', () => {
         const v4: vec4 = vec4.fromValues(2, 4, 6, 2);

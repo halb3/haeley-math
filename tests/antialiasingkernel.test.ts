@@ -8,7 +8,7 @@ import { AntiAliasingKernel } from '../source/antialiasingkernel';
 /* spellchecker: enable */
 
 
-describe('AntiAliasingKernel', () => {
+describe('AntiAliasing Kernel', () => {
 
     it('should comprise at least a single element', () => {
         const kernel = new AntiAliasingKernel(0);

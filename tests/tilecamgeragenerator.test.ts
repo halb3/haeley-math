@@ -12,8 +12,9 @@ import { TileCameraGenerator, SpaceFillingAlgorithm } from '../source/tilecamera
 
 /* tslint:disable:no-unused-expression */
 
-describe('Tile Camera Generator Scanline Iteration', () => {
-    it(' should render in the correct order', () => {
+describe('Tile Camera Generator iterators', () => {
+
+    it('scanline should render in the correct order', () => {
         const tileDimensions: [number, number] = [13, 7];
 
         // generate the expected order
@@ -27,10 +28,8 @@ describe('Tile Camera Generator Scanline Iteration', () => {
         // test if the order is correct
         testTileCameraIndicesMatchExpected(expectedOrder, tileDimensions);
     });
-});
 
-describe('Tile Camera Generator Hilbert Iteration', () => {
-    it(' should render in the correct order', () => {
+    it('hilbert should render in the correct order', () => {
         const algorithm = SpaceFillingAlgorithm.HilbertCurve;
         const tileDimensions: [number, number] = [7, 5];
 
@@ -47,10 +46,7 @@ describe('Tile Camera Generator Hilbert Iteration', () => {
         testTileCameraIndicesMatchExpected(expectedOrder, tileDimensions, algorithm);
     });
 
-});
-
-describe('Tile Camera Generator Z-Curve Iteration', () => {
-    it(' should render in the correct order', () => {
+    it('z-curve should render in the correct order', () => {
         const algorithm = SpaceFillingAlgorithm.ZCurve;
         const tileDimensions: [number, number] = [7, 5];
 
@@ -66,7 +62,9 @@ describe('Tile Camera Generator Z-Curve Iteration', () => {
         // test if the order is correct
         testTileCameraIndicesMatchExpected(expectedOrder, tileDimensions, algorithm);
     });
+
 });
+
 
 function createTileCameraGenerator(tileDimensions: [number, number],
     algorithm: SpaceFillingAlgorithm = SpaceFillingAlgorithm.ScanLine): TileCameraGenerator {
@@ -96,7 +94,7 @@ function testTileCameraIndicesMatchExpected(expectedOrder: [number, number][], t
 }
 
 
-describe('TileCameraGenerator.nextTile', () => {
+describe('Tile Camera Generator next tile', () => {
 
     it('should return ture and reset the iteration when the current tile is < 0.', () => {
         const tileCameraGenerator = createTileCameraGenerator([8, 8]);
@@ -123,26 +121,23 @@ describe('TileCameraGenerator.nextTile', () => {
     });
 });
 
-describe('TileCameraGenerator.reset', () => {
 
-    it('should set the tile to -1', () => {
+describe('Tile Camera Generator', () => {
+
+    it('should reset the tile to -1', () => {
         const tileCameraGenerator = new TileCameraGenerator();
         tileCameraGenerator.reset();
         expect(tileCameraGenerator.tile).to.eq(-1);
     });
 
-    it('should set the offset to 0', () => {
+    it('should reset the offset to 0', () => {
         const tileCameraGenerator = new TileCameraGenerator();
         tileCameraGenerator.padding = vec4.fromValues(1, 1, 1, 1);
         tileCameraGenerator.reset();
         expect(tileCameraGenerator.offset).to.eql([0, 0]);
     });
-});
 
-
-describe('TileCameraGenerator.sourceCameraChanged', () => {
-
-    it('should set the camera', () => {
+    it('should set the camera on source changed', () => {
         const tileCameraGenerator = createTileCameraGenerator([8, 8]);
         const newEyePosition = vec3.fromValues(1, 0, 0);
         const sourceCamera = tileCameraGenerator.sourceCamera;
@@ -155,9 +150,6 @@ describe('TileCameraGenerator.sourceCameraChanged', () => {
             }
         }
     });
-});
-
-describe('TileCameraGenerator.update', () => {
 
     let consoleLogStub: sinon.SinonStub;
 
@@ -183,11 +175,15 @@ describe('TileCameraGenerator.update', () => {
         tileCameraGenerator.tile = -1;
         expect(tileCameraGenerator.update()).to.eql(initialOffset);
     });
-});
 
-describe('TileCameraGenerator.viewport', () => {
+    it('cameras should be undefined if source camera is undefined', () => {
+        const tileCameraGenerator = createTileCameraGenerator([8, 8]);
+        tileCameraGenerator.sourceCamera = undefined;
+        expect(tileCameraGenerator.sourceCamera).to.be.undefined;
+        expect(tileCameraGenerator.camera).to.be.undefined;
+    });
 
-    it('should be a combination of the offset and tileSize', () => {
+    it('viewport should be a combination of the offset and tileSize', () => {
         const tileCameraGenerator = createTileCameraGenerator([8, 8]);
         tileCameraGenerator.tile = 1;
         const expectedOffset = tileCameraGenerator.update();
@@ -195,36 +191,27 @@ describe('TileCameraGenerator.viewport', () => {
         tileCameraGenerator.tileSize[0], tileCameraGenerator.tileSize[1]];
         expect(tileCameraGenerator.viewport).to.eql(expectedViewport);
     });
+
 });
 
-describe('TileCameraGenerator.sourceCamera', () => {
+describe('Tile Camera Generator reassigning', () => {
 
-    it('cameras should be undefined if the parameter is undefined', () => {
-        const tileCameraGenerator = createTileCameraGenerator([8, 8]);
-        tileCameraGenerator.sourceCamera = undefined;
-        expect(tileCameraGenerator.sourceCamera).to.be.undefined;
-        expect(tileCameraGenerator.camera).to.be.undefined;
-    });
-});
-
-describe('TileCameraGenerator should stay valid if reassigning the same values', () => {
     const tileCameraGenerator = createTileCameraGenerator([8, 8]);
 
     before(() => {
         tileCameraGenerator.nextTile();
     });
 
-    it('sourceViewort', () => {
+    it('sourceViewort should stay valid if reassigning the same values', () => {
         const sourceViewport = tileCameraGenerator.sourceViewport;
         tileCameraGenerator.sourceViewport = sourceViewport;
         expect(tileCameraGenerator.valid).to.be.true;
     });
 
-    it('tileSize', () => {
+    it('tileSize should stay valid if reassigning the same values', () => {
         const tileSize = tileCameraGenerator.tileSize;
         tileCameraGenerator.tileSize = tileSize;
         expect(tileCameraGenerator.valid).to.be.true;
     });
 
 });
-

@@ -8,7 +8,7 @@ import { Camera } from '../source/camera';
 /* spellchecker: enable */
 
 
-describe('field of view', () => {
+describe('Camera field of view', () => {
 
     it('should be initializable as fovy', () => {
         const camera = new Camera();

@@ -10,6 +10,8 @@ export {
     quat
 } from 'gl-matrix';
 
+export * from './auxiliaries';
+
 export * from './gl-matrix-extensions';
 export * from './tuples';
 

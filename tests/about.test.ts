@@ -10,7 +10,7 @@ import { version, branch, commit } from '../source/about';
 /* tslint:disable:no-unused-expression */
 
 
-describe('About validation', () => {
+describe('About', () => {
 
     it('should report library version', () => {
 

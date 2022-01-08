@@ -10,7 +10,8 @@ import { RandomSquareKernel } from '../source/randomsquarekernel';
 
 /* tslint:disable:no-unused-expression */
 
-describe('RamdomSquareKernel', () => {
+describe('RamdomSquare Kernel', () => {
+
     it('be initializable with values > 0', () => {
         expect(() => {
             let randomsquarekernel = new RandomSquareKernel(1);
@@ -25,4 +26,5 @@ describe('RamdomSquareKernel', () => {
             expect(randomsquarekernel).to.be.undefined;
         }).to.throws();
     });
+
 });

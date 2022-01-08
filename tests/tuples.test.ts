@@ -16,7 +16,7 @@ import {
 
 /* tslint:disable:no-unused-expression */
 
-describe('tuples clamp', () => {
+describe('Tuples clamp', () => {
 
     it('should clamp a float value to [0.0, 1.0] range', () => {
         const tests = [[+3, +1], [+1, +1], [-1, 0], [0, 0], [0.5, 0.5]];
@@ -59,7 +59,7 @@ describe('tuples clamp', () => {
 });
 
 
-describe('tuples', () => {
+describe('Tuples', () => {
 
     it('should duplicate 2-tuples', () => {
         const tuple0: GLfloat2 = [3.0, 2.0];

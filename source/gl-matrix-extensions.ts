@@ -3,48 +3,9 @@
 
 import { mat2, mat3, mat4, vec2, vec3, vec4 } from 'gl-matrix';
 
+import { fract } from './auxiliaries';
+
 /* spellchecker: enable */
-
-
-// GLSL sign https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/sign.xhtml
-
-/**
- * Extract the sign of the parameter as specified in GLSL.
- * @param x - Value from which to extract the sign.
- * @returns - -1.0 if x is less than 0.0, 0.0 if x is equal to 0.0, and +1.0 if x is greater than 0.0.
- */
-export function sign(x: number): number {
-    return x > 0.0 ? 1.0 : x < 0.0 ? -1.0 : 0.0;
-}
-
-// GLSL clamp https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/clamp.xhtml
-
-/**
- * Constrain a value to lie between two further values.
- * ```
- * clamp(+3, +0, +2); // results in +2;
- * ```
- * @param x - The number to clamp.
- * @param min - Minimum number operand.
- * @param max - Maximum number operand.
- * @returns - Number constrained to [min,max].
- */
-export function clamp(x: number, min: number, max: number): number {
-    return Math.max(min, Math.min(max, x));
-}
-
-/**
- * Compute the fractional part of the argument.
- * ```
- * fract(+1.23); // results in +0.23
- * fract(-1.23); // results in -0.23
- * ```
- * @param x - The number to compute the fractional part of.
- * @returns - The fractional part of x. This is calculated as x - floor(x).
- */
-export function fract(x: number): number {
-    return x > 0 ? x - Math.floor(x) : x - Math.ceil(x);
-}
 
 
 /**
@@ -350,19 +311,6 @@ export function parseVec4(v4str: string | undefined): vec4 | undefined {
         isNaN(numbers[2]) || isNaN(numbers[3]) ?
         undefined : vec4.clone(numbers);
 }
-
-
-/**
- * Performs a mix as specified in GLSL.
- * @param value1 - The first value.
- * @param value2 - The second value.
- * @param interpolation - The interpolation value (usually between 0 and 1).
- * @returns - The interpolated value between value1 and value2.
- */
-export function mix(value1: number, value2: number, interpolation: number): number {
-    return value1 * (1.0 - interpolation) + value2 * interpolation;
-}
-
 
 /**
  * A mat2 placeholder to overcome the gl-matrix out interface.
