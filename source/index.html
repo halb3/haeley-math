@@ -21,10 +21,10 @@
 
     <section class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-10-sm col-8">
+            <div class="col-12 col-lg-8">
 
                 <h1>haeley-<strong>math</strong></h1>
-                <p class="lead">Test Page</p>
+                <p class="lead">Test Page for Development</p>
                 <p>// about:
                     version <code id="version">version</code>,
                     branch <code id="branch">branch</code>,
@@ -34,6 +34,16 @@
             </div>
         </div>
     </section>
+
+    <footer>
+        <div class="row text-center">
+            <div class="col-12">
+                <p class="mt-5 mb-4">
+                    &copy; 2016&thinsp;&ndash;&thinsp;<span id="cryear"></span>
+                </p>
+            </div>
+        </div>
+    </footer>
 
 </body>
 
@@ -50,6 +60,7 @@
         document.querySelector('#version').innerHTML = haeley.math.version();
         document.querySelector('#branch').innerHTML = haeley.math.branch();
         document.querySelector('#commit').innerHTML = haeley.math.commit();
+        document.querySelector('#cryear').innerHTML = new Date().getFullYear();
 
         console.log("'haeley-math' imported:", haeley);
     };
