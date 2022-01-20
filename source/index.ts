@@ -4,15 +4,19 @@
 
 export * from './about';
 
-export {
-    vec2, vec3, vec4,
-    mat2, mat2d, mat3, mat4,
-    quat
-} from 'gl-matrix';
-
 export * from './auxiliaries';
 
-export * from './gl-matrix-extensions';
+export { glMatrix, mat2d, quat, quat2 } from 'gl-matrix';
+
+export { vec2, v2 } from './vec2';
+export { vec3, v3 } from './vec3';
+export { vec4, v4 } from './vec4';
+
+export { mat2, m2 } from './mat2';
+export { mat3, m3 } from './mat3';
+export { mat4, m4 } from './mat4';
+
+export * from './matrixstring';
 export * from './tuples';
 
 export * from './raymath';

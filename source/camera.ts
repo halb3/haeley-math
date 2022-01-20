@@ -3,8 +3,8 @@
 
 import { log, LogLevel } from 'haeley-auxiliaries';
 
-import { mat4, vec3 } from 'gl-matrix';
-import { m4 } from './gl-matrix-extensions';
+import { vec3 } from './vec3';
+import { mat4, m4 } from './mat4';
 
 import { DEG2RAD, RAD2DEG } from './auxiliaries';
 import { duplicate2, GLsizei2 } from './tuples';

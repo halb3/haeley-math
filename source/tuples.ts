@@ -3,8 +3,9 @@
 
 import { assert, logIf, LogLevel } from 'haeley-auxiliaries';
 
-import { vec2, vec3, vec4 } from 'gl-matrix';
-import { clamp2, clamp3, clamp4 } from './gl-matrix-extensions';
+import { vec2 } from './vec2';
+import { vec3 } from './vec3';
+import { vec4 } from './vec4';
 
 import { clamp } from './auxiliaries';
 
@@ -118,7 +119,7 @@ export function clampf(value: GLclampf | GLfloat, semantic?: string): GLclampf |
 export function clampf2(tuple: GLclampf2 | GLfloat2, semantic?: string): GLclampf2 | GLfloat2 {
     const tupleV2: vec2 = vec2.fromValues(tuple[0], tuple[1]);
     if (tuple[0] < 0.0 || tuple[0] > 1.0 || tuple[1] < 0.0 || tuple[1] > 1.0) {
-        clamp2(tupleV2, tupleV2, vec2.fromValues(0.0, 0.0), vec2.fromValues(1.0, 1.0));
+        vec2.clamp(tupleV2, tupleV2, vec2.fromValues(0.0, 0.0), vec2.fromValues(1.0, 1.0));
         logIf(semantic !== undefined, LogLevel.Info, `${semantic} clamped to [${tupleV2}], given [${tuple}]`);
     }
     return tuple2<typeof tuple[0]>(tupleV2);
@@ -134,7 +135,7 @@ export function clampf2(tuple: GLclampf2 | GLfloat2, semantic?: string): GLclamp
 export function clampf3(tuple: GLclampf3 | GLfloat3, semantic?: string): GLclampf3 | GLfloat3 {
     const tupleV3: vec3 = vec3.fromValues(tuple[0], tuple[1], tuple[2]);
     if (tuple[0] < 0.0 || tuple[0] > 1.0 || tuple[1] < 0.0 || tuple[1] > 1.0 || tuple[2] < 0.0 || tuple[2] > 1.0) {
-        clamp3(tupleV3, tupleV3, vec3.fromValues(0.0, 0.0, 0.0), vec3.fromValues(1.0, 1.0, 1.0));
+        vec3.clamp(tupleV3, tupleV3, vec3.fromValues(0.0, 0.0, 0.0), vec3.fromValues(1.0, 1.0, 1.0));
         logIf(semantic !== undefined, LogLevel.Info, `${semantic} clamped to [${tupleV3}], given [${tuple}]`);
     }
     return tuple3<typeof tuple[0]>(tupleV3);
@@ -151,7 +152,7 @@ export function clampf4(tuple: GLclampf4 | GLfloat4, semantic?: string): GLclamp
     const tupleV4: vec4 = vec4.fromValues(tuple[0], tuple[1], tuple[2], tuple[3]);
     if (tuple[0] < 0.0 || tuple[0] > 1.0 || tuple[1] < 0.0 || tuple[1] > 1.0 ||
         tuple[2] < 0.0 || tuple[2] > 1.0 || tuple[3] < 0.0 || tuple[3] > 1.0) {
-        clamp4(tupleV4, tupleV4, vec4.fromValues(0.0, 0.0, 0.0, 0.0), vec4.fromValues(1.0, 1.0, 1.0, 1.0));
+        vec4.clamp(tupleV4, tupleV4, vec4.fromValues(0.0, 0.0, 0.0, 0.0), vec4.fromValues(1.0, 1.0, 1.0, 1.0));
         logIf(semantic !== undefined, LogLevel.Info, `${semantic} clamped to [${tupleV4}], given [${tuple}]`);
     }
     return tuple4<typeof tuple[0]>(tupleV4);

@@ -1,8 +1,9 @@
 
 /* spellchecker: disable */
 
-import { mat4, vec2, vec3 } from 'gl-matrix';
-import { abs2, abs3, v2, v3 } from './gl-matrix-extensions';
+import { vec2, v2 } from './vec2';
+import { vec3, v3 } from './vec3';
+import { mat4 } from './mat4';
 
 import { DEG2RAD, sign, } from './auxiliaries';
 import { Camera } from './camera';
@@ -58,7 +59,7 @@ export function rayCircleIntersection(ray0: vec2, ray1: vec2, radius: number = 1
  * @returns - The intersection point of the square and the derived ray.
  */
 export function pointSquareIntersection(point: vec2, edgeLength: number = 1.0): vec2 {
-    const a = abs2(v2(), point);
+    const a = vec2.abs(v2(), point);
     if (a[0] >= a[1]) { // intersection is with left or right border
         return vec2.fromValues(sign(point[0]) * edgeLength, point[1] / a[0] * edgeLength);
     }
@@ -202,7 +203,7 @@ export function rayPlaneIntersection_tube(ray0: vec3, ray1: vec3, radius: number
  * @returns - Whether or not the given point is within an axis aligned square at [0.0, 0.0] and edge length.
  */
 export function isPointWithinSquare(point: vec2, halfLength: number = 1.0): boolean {
-    const p_abs = abs2(v2(), point);
+    const p_abs = vec2.abs(v2(), point);
     return p_abs[0] <= halfLength && p_abs[1] <= halfLength;
 }
 
@@ -215,7 +216,7 @@ export function isPointWithinSquare(point: vec2, halfLength: number = 1.0): bool
  */
 export function isPointWithinNDC(viewProjection: mat4, point: vec3): boolean {
     const p_transformed = vec3.transformMat4(v3(), point, viewProjection);
-    const p_abs = abs3(v3(), p_transformed);
+    const p_abs = vec3.abs(v3(), p_transformed);
     return p_abs[0] <= 1.0 && p_abs[1] <= 1.0 && p_transformed[2] >= 0.0 && p_transformed[2] <= 1.0;
 }
 

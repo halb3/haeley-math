@@ -1,8 +1,9 @@
 
 import { log, LogLevel, assert } from 'haeley-auxiliaries';
 
-import { mat4, vec3, vec4 } from 'gl-matrix';
-import { m4 } from './gl-matrix-extensions';
+import { vec3 } from './vec3';
+import { vec4 } from './vec4';
+import { mat4, m4 } from './mat4';
 
 import { upperPowerOfTwo } from './auxiliaries';
 import { Camera } from './camera';

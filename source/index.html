@@ -33,6 +33,18 @@
 
             </div>
         </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+
+                <h2>Matrix Log Tests</h2>
+                <p>Check out the actual console output for the interleaved sequence of log messages.</p>
+
+                <p><strong>Console Log</strong> Capture:</p>
+                <pre class="bg-light px-3 py-2 border-start text-black" id="log"></pre>
+
+            </div>
+        </div>
     </section>
 
     <footer>
@@ -54,6 +66,14 @@
 </script>
 
 <script>
+
+    const log = document.querySelector('#log');
+    var genuineLog = console.log;
+    console.log = function () {
+        genuineLog.apply(console, arguments);
+        log.innerHTML += [...arguments].join(' ') + '\n';
+    };
+
     window.onload = () => {
 
         document.title = __LIB_NAME__;
@@ -63,6 +83,34 @@
         document.querySelector('#cryear').innerHTML = new Date().getFullYear();
 
         console.log("'haeley-math' imported:", haeley);
+
+        const math = haeley.math;
+
+        console.log('\nRandom vec2:');
+        math.vec2.log(math.vec2.random(), 12);
+
+        console.log('\nRandom vec3:');
+        math.vec3.log(math.vec3.random(-1.0, +1.0), 10);
+
+        console.log('\nRandom vec4:');
+        math.vec4.log(math.vec4.random(-100.0, +100.0), 8);
+
+
+        console.log('\nRandom mat2:');
+        math.mat2.log(math.mat2.random(), 6);
+
+        console.log('\nRandom mat3:');
+        math.mat3.log(math.mat3.random(-1.0, +1.0), 4);
+
+        console.log('\nRandom mat4:');
+        math.mat4.log(math.mat4.random(-100.0, +100.0), 2);
+
+        console.log('\nRandom mat8x4 (2 digits):');
+        math.logArrayAsMatrix(Float32Array.from({ length: 8 * 4 }, () => Math.random()), 8, 2);
+
+        console.log('\nRandom mat8x16 (4 digits):');
+        math.logArrayAsMatrix(Float32Array.from({ length: 8 * 16 }, () => Math.random() * 2.0 - 1.0), 8, 4);
+
     };
 </script>
 
