@@ -26,14 +26,14 @@ export function matrixStringFromArray(a: Float32Array, cols: number, digits: num
     const blanks = paddings.reduce((a, v) => a + v) + paddings.length - 1;
     const rows = Math.ceil(a.length / cols);
 
-    let mat = '';
-    mat += ' ╭ ' + ' '.repeat(blanks) + ' ╮\n';
+    let matstr = '';
+    matstr += ' ╭ ' + ' '.repeat(blanks) + ' ╮\n';
     for (let i = 0; i < rows; ++i) {
-        mat += ` │ ${strings.splice(0, cols).join(' ')} │\n`;
+        matstr += ` │ ${strings.splice(0, cols).join(' ')} │\n`;
     }
-    mat += ' ╰ ' + ' '.repeat(blanks) + ' ╯';
+    matstr += ' ╰ ' + ' '.repeat(blanks) + ' ╯';
 
-    return mat;
+    return matstr;
 }
 
 export function interleaveMatrixStrings(strings: Array<string>): string {
