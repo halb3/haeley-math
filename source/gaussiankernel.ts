@@ -42,11 +42,6 @@ export class GaussianKernel extends KernelF32 {
         const hKernel = kh === 0 ? new Float32Array([1.0]) : erfKernel(kh);
         const dKernel = kd === 0 ? new Float32Array([1.0]) : erfKernel(kd);
 
-        console.log('w', kw, wKernel);
-        console.log('h', kh, hKernel);
-        console.log('d', kd, dKernel);
-
-
         for (let z = 0; z < this._depth; ++z)
             for (let y = 0; y < this.height; ++y)
                 for (let x = 0; x < this._width; ++x) {
