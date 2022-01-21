@@ -1,6 +1,8 @@
 
 /* spellchecker: disable */
 
+import { log, LogLevel } from 'haeley-auxiliaries';
+
 /* spellchecker: enable */
 
 
@@ -36,5 +38,5 @@ export function matrixStringFromArray(a: Float32Array, cols: number, digits: num
 }
 
 export function logArrayAsMatrix(a: Float32Array, cols: number, digits: number = 4): void {
-    console.log(matrixStringFromArray(a as Float32Array, cols, digits));
+    log(LogLevel.Log, matrixStringFromArray(a as Float32Array, cols, digits));
 }
