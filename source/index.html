@@ -115,12 +115,15 @@
         {   // virtual camera math test
 
             const vec3 = math.vec3;
+            const vec4 = math.vec4;
             const mat4 = math.mat4;
 
             const camera = new math.Camera();
-            camera.eye = [2.0, 0.5, -4.0];
-            camera.center = [0.0, -0.5, 2.0];
-            camera.up = [0.0, 2.0, 0.0];
+            camera.eye = [0.0, 0.0, 0.0]; // [2.0, 0.5, -4.0];
+            camera.center = [0.0, 0.0, 1.0]; // [0.0, -0.5, 2.0];
+            camera.up = [0.0, 1.0, 0.0]; //[0.0, 2.0, 0.0];
+            camera.near = 0.5;
+            camera.far = 1.0;
             camera.aspect = 16.0 / 9.0;
 
             window['camera'] = camera;
@@ -135,6 +138,8 @@
                 + `\n fovy   = ${camera.fovy.toFixed(2).padStart(6, ' ')}`
                 + `\n aspect = ${camera.aspect.toFixed(2).padStart(6, ' ')}`;
 
+            let lookAtCGM;
+            let lookAtGLM;
             {
                 let n = vec3.subtract(vec3.create(), camera.eye, camera.center);
                 vec3.normalize(n, n); // !
@@ -143,7 +148,7 @@
                 let v = vec3.cross(vec3.create(), n, u);
                 vec3.normalize(v, v); // !
 
-                let lookAtCGM = mat4.mul(mat4.create(),
+                lookAtCGM = mat4.mul(mat4.create(),
                     mat4.transpose(mat4.create(), mat4.fromValues(
                         u[0], u[1], u[2], 0,
                         v[0], v[1], v[2], 0,
@@ -169,7 +174,7 @@
                 // );
 
                 // mat4.transpose(lookAtCGM, lookAtCGM);
-                const lookAtGLM = camera.view; //mat4.lookAt...
+                lookAtGLM = camera.view; //mat4.lookAt...
 
                 const preCameraView = document.getElementById('camera.view');
                 preCameraView.innerHTML = math.interleaveMatrixStrings([
@@ -233,14 +238,33 @@
                     mat4.toMatrixString(perspectiveCGM, 4)
                 ]);
 
-                // let v1 = math.vec4.random(); v1[3] = 1.0;
-                // math.vec4.log(v1);
-                // let vt = math.vec4.transformMat4(v1, v1, perspectiveCGM);
-                // math.vec4.scale(vt, vt, 1.0 / vt[3]);
-                // math.vec4.log(vt);
-                // vt = math.vec4.transformMat4(v1, v1, perspectiveGLM);
-                // math.vec4.scale(vt, vt, 1.0 / vt[3]);
-                // math.vec4.log(vt);
+
+
+                let v1 = math.vec4.fromValues(0.0, 0.0, 1.0); v1[3] = 1.0;
+                math.vec4.log(v1);
+
+                let TCGM = mat4.mul(mat4.create(), perspectiveCGM, lookAtCGM);
+                let vtCGM = math.vec4.transformMat4(vec4.create(), v1, TCGM);
+
+                math.vec4.scale(vtCGM, vtCGM, 1.0 / vtCGM[3]);
+
+                let TGLM = mat4.mul(mat4.create(), perspectiveGLM, lookAtGLM);
+                let vtGLM = math.vec4.transformMat4(vec4.create(), v1, TGLM);
+
+                math.vec4.scale(vtGLM, vtGLM, 1.0 / vtGLM[3]);
+
+                console.log(math.interleaveMatrixStrings([
+                    mat4.toMatrixString(perspectiveGLM, 4),
+                    vec4.toMatrixString(v1, 4),
+                    vec4.toMatrixString(vtGLM, 4)
+                ]));
+
+                console.log(math.interleaveMatrixStrings([
+                    mat4.toMatrixString(perspectiveCGM, 4),
+                    vec4.toMatrixString(v1, 4),
+                    vec4.toMatrixString(vtCGM, 4)
+                ]));
+
 
                 let A = mat4.fromValues(
                     1, 2, 3, 4,
@@ -266,24 +290,24 @@
 
         {   // formatted output test
 
-            console.log();
-            console.log('Random vec2, vec3, and vec4:');
-            console.log(math.interleaveMatrixStrings([
-                math.vec2.toMatrixString(math.vec2.random(), 12),
-                math.vec3.toMatrixString(math.vec3.random(-1.0, +1.0), 10),
-                math.vec4.toMatrixString(math.vec4.random(-100.0, +100.0), 8)]));
+            // console.log();
+            // console.log('Random vec2, vec3, and vec4:');
+            // console.log(math.interleaveMatrixStrings([
+            //     math.vec2.toMatrixString(math.vec2.random(), 12),
+            //     math.vec3.toMatrixString(math.vec3.random(-1.0, +1.0), 10),
+            //     math.vec4.toMatrixString(math.vec4.random(-100.0, +100.0), 8)]));
 
-            console.log('Random mat2, mat3, and mat4:');
-            console.log(math.interleaveMatrixStrings([
-                math.mat2.toMatrixString(math.mat2.random(), 6),
-                math.mat3.toMatrixString(math.mat3.random(-1.0, +1.0), 4),
-                math.mat4.toMatrixString(math.mat4.random(-100.0, +100.0), 2)]));
+            // console.log('Random mat2, mat3, and mat4:');
+            // console.log(math.interleaveMatrixStrings([
+            //     math.mat2.toMatrixString(math.mat2.random(), 6),
+            //     math.mat3.toMatrixString(math.mat3.random(-1.0, +1.0), 4),
+            //     math.mat4.toMatrixString(math.mat4.random(-100.0, +100.0), 2)]));
 
-            console.log('Random mat8x4 (2 digits):');
-            math.logArrayAsMatrix(Float32Array.from({ length: 8 * 4 }, () => Math.random()), 8, 2);
+            // console.log('Random mat8x4 (2 digits):');
+            // math.logArrayAsMatrix(Float32Array.from({ length: 8 * 4 }, () => Math.random()), 8, 2);
 
-            console.log('Random mat8x16 (4 digits):');
-            math.logArrayAsMatrix(Float32Array.from({ length: 8 * 16 }, () => Math.random() * 2.0 - 1.0), 8, 4);
+            // console.log('Random mat8x16 (4 digits):');
+            // math.logArrayAsMatrix(Float32Array.from({ length: 8 * 16 }, () => Math.random() * 2.0 - 1.0), 8, 4);
         }
 
     };
