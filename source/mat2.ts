@@ -3,7 +3,7 @@
 
 /* spellchecker: disable */
 
-import { mat2 as mat2_glm, ReadonlyMat2, ReadonlyMat2d } from 'gl-matrix';
+import { mat2 as mat2_glm, ReadonlyMat2 } from 'gl-matrix';
 export declare type mat2 = mat2_glm;
 
 import { logArrayAsMatrix, matrixStringFromArray } from './matrixstring';
