@@ -141,7 +141,7 @@
             let lookAtCGM;
             let lookAtGLM;
             {
-                let n = vec3.subtract(vec3.create(), camera.eye, camera.center);
+                let n = vec3.subtract(vec3.create(), camera.center, camera.eye);
                 vec3.normalize(n, n); // !
                 let u = vec3.cross(vec3.create(), camera.up, n);
                 vec3.normalize(u, u); // !
