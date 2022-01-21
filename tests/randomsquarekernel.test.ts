@@ -1,9 +1,6 @@
 
 /* spellchecker: disable */
 
-import { assertions } from 'haeley-auxiliaries';
-assertions(true);
-
 import { expect } from 'chai';
 
 import { RandomSquareKernel } from '../source/randomsquarekernel';
@@ -17,14 +14,14 @@ describe('RamdomSquare Kernel', () => {
             let randomsquarekernel = new RandomSquareKernel(1);
             randomsquarekernel = new RandomSquareKernel(10);
             expect(randomsquarekernel).to.not.be.undefined;
-        }).to.not.throws();
+        }).to.not.throw();
     });
 
     it('be not be initializable with values <= 0', () => {
         expect(() => {
             const randomsquarekernel = new RandomSquareKernel(0);
             expect(randomsquarekernel).to.be.undefined;
-        }).to.throws();
+        }).to.throw();
     });
 
 });

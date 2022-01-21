@@ -1,14 +1,13 @@
 
 /* spellchecker: disable */
 
-import { assertions } from 'haeley-auxiliaries';
-assertions(true);
 
 import { expect } from 'chai';
 
 import {
     KernelF32, KernelI8, KernelUI32, KernelI32, KernelUI8, KernelJSON, SortApproach
 } from '../source/kernel';
+
 
 describe('Primitive Kernels', () => {
 
@@ -39,12 +38,12 @@ describe('Primitive Kernels', () => {
                 }
             }
         }
-        expect(() => { kernel32f1.get(0) }).to.not.throws();
-        expect(() => { kernel32f2.get(3) }).to.not.throws();
-        expect(() => { kernel32f3.get(26) }).to.not.throws();
 
+        expect(() => { kernel32f1.get(0) }).to.not.throw();
+        expect(() => { kernel32f2.get(3) }).to.not.throw();
+        expect(() => { kernel32f3.get(26) }).to.not.throw();
 
-        expect(() => { kernel32f4.get(10000000000) }).to.throws();
+        expect(() => { kernel32f4.get(10000000000) }).to.throw();
     });
 
     it('set function should run on correct indices', () => {
@@ -55,17 +54,17 @@ describe('Primitive Kernels', () => {
         for (let x = 0; x < 4; x++) {
             for (let y = 0; y < 4; y++) {
                 for (let z = 0; z < 4; z++) {
-                    expect(() => { kernel32f4.set([1, 2, 3, 4], x + y * 4 + z * 4 * 4) }).to.not.throws();
-                    expect(() => { kernel32f4.set([1, 2, 3, 4], x, y, z) }).to.not.throws();
+                    expect(() => { kernel32f4.set([1, 2, 3, 4], x + y * 4 + z * 4 * 4) }).to.not.throw();
+                    expect(() => { kernel32f4.set([1, 2, 3, 4], x, y, z) }).to.not.throw();
                 }
             }
         }
-        expect(() => { kernel32f1.set([1], 0) }).to.not.throws();
-        expect(() => { kernel32f2.set([1, 2], 3) }).to.not.throws();
-        expect(() => { kernel32f3.set([1, 2, 3], 26) }).to.not.throws();
+        expect(() => { kernel32f1.set([1], 0) }).to.not.throw();
+        expect(() => { kernel32f2.set([1, 2], 3) }).to.not.throw();
+        expect(() => { kernel32f3.set([1, 2, 3], 26) }).to.not.throw();
 
 
-        expect(() => { kernel32f4.set([1], 10000000000) }).to.throws();
+        expect(() => { kernel32f4.set([1], 10000000000) }).to.throw();
     });
 
     it('should be sortable with evey sorting approach', () => {
@@ -80,49 +79,49 @@ describe('Primitive Kernels', () => {
     it('should be initializable from JSON', () => {
         let kernelJson: KernelJSON = { kernel: new Array<number>(1), size: { width: 1, height: 1, depth: 1 } };
         const kernelF32 = new KernelF32(1, 1);
-        expect(() => { kernelF32.fromJSON(kernelJson) }).to.not.throws();
+        expect(() => { kernelF32.fromJSON(kernelJson) }).to.not.throw();
 
         kernelJson = { kernel: new Array<number>(1), size: { width: 1, height: 1, depth: 1 } };
         const kernelUI32 = new KernelUI32(1, 1);
-        expect(() => { kernelUI32.fromJSON(kernelJson) }).to.not.throws();
+        expect(() => { kernelUI32.fromJSON(kernelJson) }).to.not.throw();
 
         kernelJson = { kernel: new Array<number>(1), size: { width: 1, height: 1, depth: 1 } };
         const kernelI32 = new KernelI32(1, 1);
-        expect(() => { kernelI32.fromJSON(kernelJson) }).to.not.throws();
+        expect(() => { kernelI32.fromJSON(kernelJson) }).to.not.throw();
 
         kernelJson = { kernel: new Array<number>(1), size: { width: 1, height: 1, depth: 1 } };
         const kernelUI8 = new KernelUI8(1, 1);
-        expect(() => { kernelUI8.fromJSON(kernelJson) }).to.not.throws();
+        expect(() => { kernelUI8.fromJSON(kernelJson) }).to.not.throw();
 
     });
 
     it('should be able to retrieve dimension lengths', () => {
         const kernelF32 = new KernelI32(1, 1);
-        expect(() => { kernelF32.width }).to.not.throws();
+        expect(() => { kernelF32.width }).to.not.throw();
         expect(kernelF32.width).to.not.be.undefined;
 
-        expect(() => { kernelF32.height }).to.not.throws();
+        expect(() => { kernelF32.height }).to.not.throw();
         expect(kernelF32.height).to.not.be.undefined;
 
-        expect(() => { kernelF32.depth }).to.not.throws();
+        expect(() => { kernelF32.depth }).to.not.throw();
         expect(kernelF32.depth).to.not.be.undefined;
     });
 
     it('should be able to retrieve strides', () => {
         const kernelF32 = new KernelI32(1, 1);
-        expect(() => { kernelF32.xStride }).to.not.throws();
+        expect(() => { kernelF32.xStride }).to.not.throw();
         expect(kernelF32.xStride).to.not.be.undefined;
 
-        expect(() => { kernelF32.yStride }).to.not.throws();
+        expect(() => { kernelF32.yStride }).to.not.throw();
         expect(kernelF32.yStride).to.not.be.undefined;
 
-        expect(() => { kernelF32.zStride }).to.not.throws();
+        expect(() => { kernelF32.zStride }).to.not.throw();
         expect(kernelF32.zStride).to.not.be.undefined;
 
-        expect(() => { kernelF32.bytesLength }).to.not.throws();
+        expect(() => { kernelF32.bytesLength }).to.not.throw();
         expect(kernelF32.bytesLength).to.not.be.undefined;
 
-        expect(() => { kernelF32.bytesPerComponent }).to.not.throws();
+        expect(() => { kernelF32.bytesPerComponent }).to.not.throw();
         expect(kernelF32.bytesPerComponent).to.not.be.undefined;
     });
 });

@@ -54,7 +54,7 @@
     },
     "dependencies": {
         "gl-matrix": "^3.4.3",
-        "haeley-auxiliaries": "^0.2.1"
+        "haeley-auxiliaries": "^0.3.1"
     },
     "scripts": {
         "build": "vite build && tsc --emitDeclarationOnly",
