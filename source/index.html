@@ -147,6 +147,7 @@
                 vec3.normalize(u, u); // !
                 let v = vec3.cross(vec3.create(), n, u);
                 vec3.normalize(v, v); // !
+                vec3.scale(n, n, -1.0);
 
                 lookAtCGM = mat4.mul(mat4.create(),
                     mat4.transpose(mat4.create(), mat4.fromValues(
@@ -195,11 +196,11 @@
                 );
                 let f = camera.far;
                 let P2 = mat4.fromValues(
-                    1.0, 0.0, 0.0, 0.0,
+                    -1.0 / f, 0.0, 0.0, 0.0,
                     // +1.0, 0.0, 0.0, 0.0, // gl-matrix
-                    0.0, 1.0, 0.0, 0.0,
+                    0.0, 1.0 / f, 0.0, 0.0,
                     // 0.0, +1.0, 0.0, 0.0, // gl-matrix
-                    0.0, 0.0, -1.0, 0.0,
+                    0.0, 0.0, -1.0 / f, 0.0,
                     // 0.0, 0.0, -1.0, 0.0, // gl-matrix
                     0.0, 0.0, 0.0, +1.0
                 );
@@ -210,7 +211,7 @@
                     0.0, 1.0, 0.0, 0.0,
                     0.0, 0.0, 1.0 / (1.0 - k), -k / (1.0 - k),
                     // 0.0, 0.0, (f + n) / (n - f), 2.0 * f * n / (n - f), // gl-matrix
-                    0.0, 0.0, -1.0, 0.0
+                    0.0, 0.0, 1.0, 0.0
                 );
 
 
@@ -240,11 +241,16 @@
 
 
 
-                let v1 = math.vec4.fromValues(0.0, 0.0, 1.0); v1[3] = 1.0;
+                let v1 = math.vec4.random(); v1[3] = 1.0;
+                //let v1 = math.vec4.fromValues(0.5, 0.5, 0.5); v1[3] = 1.0;
                 math.vec4.log(v1);
 
-                let TCGM = mat4.mul(mat4.create(), perspectiveCGM, lookAtCGM);
-                let vtCGM = math.vec4.transformMat4(vec4.create(), v1, TCGM);
+                //let TCGM = mat4.mul(mat4.create(), perspectiveCGM, lookAtCGM);
+                //let vtCGM = math.vec4.transformMat4(vec4.create(), v1, TCGM);
+                let vtCGM = math.vec4.transformMat4(vec4.create(), v1, lookAtCGM);
+                math.vec4.transformMat4(vtCGM, vtCGM, P1);
+                math.vec4.transformMat4(vtCGM, vtCGM, P2);
+                math.vec4.transformMat4(vtCGM, vtCGM, P3);
 
                 math.vec4.scale(vtCGM, vtCGM, 1.0 / vtCGM[3]);
 
@@ -288,7 +294,8 @@
 
         }
 
-        {   // formatted output test
+        {
+            // formatted output test
 
             // console.log();
             // console.log('Random vec2, vec3, and vec4:');
