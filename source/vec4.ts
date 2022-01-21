@@ -6,7 +6,7 @@
 import { vec4 as vec4_glm, ReadonlyVec4, ReadonlyVec3 } from 'gl-matrix';
 export declare type vec4 = vec4_glm;
 
-import { logArrayAsMatrix } from './matrixstring';
+import { logArrayAsMatrix, matrixStringFromArray } from './matrixstring';
 
 /* spellchecker: enable */
 
@@ -94,6 +94,10 @@ module vec4_ext {
 
     export function log(a: ReadonlyVec4, digits: number = 4): void {
         logArrayAsMatrix(a as Float32Array, 1, digits);
+    }
+
+    export function toMatrixString(a: ReadonlyVec4, digits: number = 4): string {
+        return matrixStringFromArray(a as Float32Array, 1, digits);
     }
 
     /**

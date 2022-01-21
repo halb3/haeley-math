@@ -6,7 +6,7 @@
 import { mat4 as mat4_glm, ReadonlyMat4 } from 'gl-matrix';
 export declare type mat4 = mat4_glm;
 
-import { logArrayAsMatrix } from './matrixstring';
+import { logArrayAsMatrix, matrixStringFromArray } from './matrixstring';
 
 /* spellchecker: enable */
 
@@ -36,6 +36,10 @@ module mat4_ext {
 
     export function log(a: ReadonlyMat4, digits: number = 4): void {
         logArrayAsMatrix(a as Float32Array, 4, digits);
+    }
+
+    export function toMatrixString(a: ReadonlyMat4, digits: number = 4): string {
+        return matrixStringFromArray(a as Float32Array, 4, digits);
     }
 
 }

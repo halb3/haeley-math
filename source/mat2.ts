@@ -3,10 +3,10 @@
 
 /* spellchecker: disable */
 
-import { mat2 as mat2_glm, ReadonlyMat2 } from 'gl-matrix';
+import { mat2 as mat2_glm, ReadonlyMat2, ReadonlyMat2d } from 'gl-matrix';
 export declare type mat2 = mat2_glm;
 
-import { logArrayAsMatrix } from './matrixstring';
+import { logArrayAsMatrix, matrixStringFromArray } from './matrixstring';
 
 /* spellchecker: enable */
 
@@ -36,6 +36,10 @@ module mat2_ext {
 
     export function log(a: ReadonlyMat2, digits: number = 4): void {
         logArrayAsMatrix(a as Float32Array, 2, digits);
+    }
+
+    export function toMatrixString(a: ReadonlyMat2, digits: number = 4): string {
+        return matrixStringFromArray(a as Float32Array, 2, digits);
     }
 
 }

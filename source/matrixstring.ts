@@ -5,7 +5,6 @@ import { log, LogLevel } from 'haeley-auxiliaries';
 
 /* spellchecker: enable */
 
-
 export function matrixStringFromArray(a: Float32Array, cols: number, digits: number = 4): string {
 
     // const columns = new Array<Float32Array>(cols);
@@ -35,6 +34,24 @@ export function matrixStringFromArray(a: Float32Array, cols: number, digits: num
     mat += ' ╰ ' + ' '.repeat(blanks) + ' ╯';
 
     return mat;
+}
+
+export function interleaveMatrixStrings(strings: Array<string>): string {
+
+    const rowsPerString = new Array<Array<string>>(strings.length);
+    strings.forEach((value, index) => rowsPerString[index] = value.split('\n'));
+
+    const rows = rowsPerString.map((v) => v.length);
+    const paddings = rowsPerString.map((v) => v[0].length);
+    const maxRows = rows.reduce((p, c) => Math.max(p, c));
+
+    let message = '';
+    for (let i = 0; i < maxRows; ++i) {
+        rowsPerString.forEach((v, index) =>
+            message += i < rows[index] ? v[i] : ' '.repeat(paddings[index]));
+        message += '\n';
+    }
+    return message;
 }
 
 export function logArrayAsMatrix(a: Float32Array, cols: number, digits: number = 4): void {

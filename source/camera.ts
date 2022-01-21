@@ -202,7 +202,7 @@ export class Camera {
      */
     set fovx(fovx: GLfloat) {
         const horizontalAngle = fovx * DEG2RAD;
-        const verticalAngle = 2.0 * Math.atan(Math.tan(horizontalAngle / 2.0) * (1.0 / this.aspect));
+        const verticalAngle = 2.0 * Math.atan(Math.tan(horizontalAngle / 2.0) / this.aspect);
 
         const fovy = verticalAngle * RAD2DEG;
         if (this._fovy === fovy) {
@@ -210,6 +210,14 @@ export class Camera {
         }
         this._fovy = fovy;
         this.invalidate(false, true);
+    }
+
+    /**
+     */
+    get fovx() {
+        const verticalAngle = this.fovy * DEG2RAD;
+        const horizontalAngle = 2.0 * Math.atan(Math.tan(verticalAngle / 2.0) * this.aspect);
+        return horizontalAngle * RAD2DEG;
     }
 
     /**
