@@ -37,14 +37,109 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
 
-                <h2>Camera Test:</h2>
-                <p>Compare virtual camera math (gl-matrix) with math based on <a
-                        href="https://cgmath.cc/units/virtual-camera.html">cgmath.cc</a>.</p>
+                <h2>Float32Array to Matrix String</h2>
+                <p>Float32Array to columnar-string (matrix) with fixed digits:</p>
+
+                <form class="row">
+                    <div class="col-2 text-end">
+                        <label for="range-columns" class="form-label form-control-sm"># columns:</label>
+                    </div>
+                    <div class="col">
+                        <input type="range" class="form-range form-control-sm" id="range-columns" step="1" min="1"
+                            max="16" value="4">
+                    </div>
+                    <div class="col-2">
+                        <input id="number-columns" type="number" class="form-control form-control-sm" placeholder="1"
+                            step="1" min="0" max="8" value="4">
+                    </div>
+                </form>
+                <form class="row">
+                    <div class="col-2 text-end">
+                        <label for="range-digits" class="form-label form-control-sm"># digits:</label>
+                    </div>
+                    <div class="col">
+                        <input type="range" class="form-range form-control-sm" id="range-digits" step="1" min="0"
+                            max="8" value="2">
+                    </div>
+                    <div class="col-2">
+                        <input id="number-digits" type="number" class="form-control form-control-sm" placeholder="1"
+                            step="1" min="0" max="8" value="2">
+                    </div>
+                </form>
+                <pre class="bg-light px-3 py-2 border-start" id="columns-and-digits"></pre>
+
+                <p>Some more examples:</p>
+
+                <pre class="bg-light px-3 py-2 border-start text-black" id="matrix-examples"></pre>
+
+            </div>
+        </div>
+
+
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+
+                <h2>Camera (Perspective):</h2>
+                <p>Parse vec3 from string for eye, center, and up:</p>
+
+                <div class="row g-2 mb-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control font-monospace" id="text-eye" value="0.0, 0.0, 2.0">
+                            <label
+                                for="text-eye"><code>camera.eye = <span class="text-muted">x,y,z</span></code></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control font-monospace" id="text-center"
+                                value="0.0, 0.0, 0.0">
+                            <label
+                                for="text-center"><code>camera.center = <span class="text-muted">x,y,z</span></code></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control font-monospace" id="text-up" value="0.0, 1.0, 0.0">
+                            <label for="text-up"><code>camera.up = <span class="text-muted">x,y,z</span></code></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="number" class="form-control font-monospace" id="number-near" value="0.01">
+                            <label for="number-near"><code>camera.near</code></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="number" class="form-control font-monospace" id="number-far" value="8.00">
+                            <label for="number-far"><code>camera.far</code></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="number" class="form-control font-monospace" id="number-fovy" value="45.00">
+                            <label for="number-fovy"><code>camera.fovy</code></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="number" class="form-control font-monospace" id="number-aspect" value="1.7778">
+                            <label for="number-aspect"><code>camera.aspect</code></label>
+                        </div>
+                    </div>
+                </div>
 
                 <p class="mb-1">camera <code>eye</code>, <code>center</code>, and <code>up</code> as well as
                     <code>near</code>, <code>far</code>, <code>fovy</code>, and <code>aspect</code>:
                 </p>
-                <pre class="bg-light px-3 py-2 border-start" id="camera"></pre>
+                <pre class="bg-light px-3 py-2 border-start" id="parsed-camera"></pre>
+                <!--
+                <p>Compare virtual camera math (gl-matrix) with math based on <a
+                        href="https://cgmath.cc/units/virtual-camera.html">cgmath.cc</a>.</p>
 
                 <p class="mb-1">camera.view (gl-matrix mat4.lookAt) left vs. cgmath lookAt (transposed) right:</p>
                 <pre class="bg-light px-3 py-2 border-start" id="camera.view"></pre>
@@ -56,20 +151,12 @@
                 <p class="mb-1">cgmath projection sub-transforms (PI, PII, PIII):</p>
                 <pre class="bg-light px-3 py-2 border-start" id="camera.p123"></pre>
 
-            </div>
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
-
-                <h2>Matrix Log Tests</h2>
-                <p>Check out the actual console output for the interleaved sequence of log messages.</p>
-
-                <p><strong>Console Log</strong> Capture:</p>
-                <pre class="bg-light px-3 py-2 border-start text-black" id="log"></pre>
+                <p class="mb-1">cgmath projection sub-transforms (PI, PII, PIII):</p>
+                <pre class="bg-light px-3 py-2 border-start" id="camera.p123"></pre> -->
 
             </div>
         </div>
+
 
     </section>
 
@@ -93,24 +180,78 @@
 
 <script>
 
-    const log = document.querySelector('#log');
-    var genuineLog = console.log;
-    console.log = function () {
-        genuineLog.apply(console, arguments);
-        log.innerHTML += [...arguments].join(' ') + '\n';
-    };
-
     window.onload = () => {
 
+        const math = haeley.math;
+
         document.title = __LIB_NAME__;
-        document.querySelector('#version').innerHTML = haeley.math.version();
-        document.querySelector('#branch').innerHTML = haeley.math.branch();
-        document.querySelector('#commit').innerHTML = haeley.math.commit();
+        document.querySelector('#version').innerHTML = math.version();
+        document.querySelector('#branch').innerHTML = math.branch();
+        document.querySelector('#commit').innerHTML = math.commit();
         document.querySelector('#cryear').innerHTML = new Date().getFullYear();
 
         console.log("'haeley-math' imported:", haeley);
 
-        const math = haeley.math;
+
+        {   // interactive array to matrix test
+
+            const preColumnsDigits = document.getElementById('columns-and-digits');
+            const test = math.mat4.random(-16.0, +16.0);
+
+            const rangeColumns = document.getElementById('range-columns');
+            const numberColumns = document.getElementById('number-columns');
+            const rangeDigits = document.getElementById('range-digits');
+            const numberDigits = document.getElementById('number-digits');
+
+            const updateColumnsAndDigits = () => {
+                const columns = parseInt(rangeColumns.value, 10);
+                const digits = parseInt(rangeDigits.value, 10);
+                preColumnsDigits.innerHTML =
+                    `// haeley.math.matrixStringFromArray([...], ${columns}, ${digits}):\n`
+                    + math.matrixStringFromArray(
+                        test, parseInt(rangeColumns.value, 10), parseInt(rangeDigits.value, 10));
+            };
+            updateColumnsAndDigits();
+
+            rangeColumns.oninput = (event) => {
+                numberColumns.value = event.target.value;
+                updateColumnsAndDigits();
+            };
+            numberColumns.onchange = (event) => {
+                rangeColumns.value = event.target.value;
+                updateColumnsAndDigits();
+            };
+            rangeDigits.oninput = (event) => {
+                numberDigits.value = event.target.value;
+                updateColumnsAndDigits();
+            };
+            numberDigits.onchange = (event) => {
+                rangeDigits.value = event.target.value;
+                updateColumnsAndDigits();
+            };
+        }
+
+
+        {   // formatted output test
+
+            const preMatrixExamples = document.getElementById('matrix-examples');
+
+            preMatrixExamples.innerHTML = `// random vec2, vec3, and vec4:
+${math.interleaveMatrixStrings([
+                math.vec2.toMatrixString(math.vec2.random(), 12),
+                math.vec3.toMatrixString(math.vec3.random(-1.0, +1.0), 10),
+                math.vec4.toMatrixString(math.vec4.random(-100.0, +100.0), 8)])}
+// random mat2, mat3, and mat4:
+${math.interleaveMatrixStrings([
+                    math.mat2.toMatrixString(math.mat2.random(), 6),
+                    math.mat3.toMatrixString(math.mat3.random(-1.0, +1.0), 4),
+                    math.mat4.toMatrixString(math.mat4.random(-100.0, +100.0), 2)])}
+// random mat8x4 (2 digits):
+${math.matrixStringFromArray(Float32Array.from({ length: 8 * 4 }, () => Math.random()), 8, 2)}
+// random mat8x16 (4 digits):
+${math.matrixStringFromArray(Float32Array.from({ length: 8 * 16 }, () => Math.random() * 2.0 - 1.0), 8, 4)}`;
+        }
+
 
         {   // virtual camera math test
 
@@ -128,199 +269,164 @@
 
             window['camera'] = camera;
 
-            const preCamera = document.getElementById('camera');
-            preCamera.innerHTML = math.interleaveMatrixStrings([
-                vec3.toMatrixString(camera.eye, 2),
-                vec3.toMatrixString(camera.center, 2),
-                vec3.toMatrixString(camera.up, 2)])
-                + ` near   = ${camera.near.toFixed(2).padStart(6, ' ')}`
-                + `\n far    = ${camera.far.toFixed(2).padStart(6, ' ')}`
-                + `\n fovy   = ${camera.fovy.toFixed(2).padStart(6, ' ')}`
-                + `\n aspect = ${camera.aspect.toFixed(2).padStart(6, ' ')}`;
+            const preCamera = document.getElementById('parsed-camera');
+            const textCameraEye = document.getElementById('text-eye');
+            const textCameraCenter = document.getElementById('text-center');
+            const textCameraUp = document.getElementById('text-up');
 
-            let lookAtCGM;
-            let lookAtGLM;
-            {
-                let n = vec3.subtract(vec3.create(), camera.center, camera.eye);
-                vec3.normalize(n, n); // !
-                let u = vec3.cross(vec3.create(), n, camera.up);
-                vec3.normalize(u, u); // !
-                let v = vec3.cross(vec3.create(), u, n);
-                vec3.normalize(v, v); // !
-                //vec3.scale(n, n, -1.0);
+            const numberCameraNear = document.getElementById('number-near');
+            const numberCameraFar = document.getElementById('number-far');
+            const numberCameraFovy = document.getElementById('number-fovy');
+            const numberCameraAspect = document.getElementById('number-aspect');
 
-                lookAtCGM = mat4.mul(mat4.create(),
-                    mat4.transpose(mat4.create(), mat4.fromValues(
-                        u[0], u[1], u[2], 0,
-                        v[0], v[1], v[2], 0,
-                        n[0], n[1], n[2], 0,
-                        0, 0, 0, 1)),
-                    mat4.transpose(mat4.create(), mat4.fromValues(
-                        1, 0, 0, -camera.eye[0],
-                        0, 1, 0, -camera.eye[1],
-                        0, 0, 1, -camera.eye[2],
-                        0, 0, 0, 1)),
-                    mat4.fromValues(
-                        1, 0, 0, 0,
-                        0, 1, 0, 0,
-                        0, 0, 1, 0,
-                        0, 0, 0, 1)
-                );
-                // let lookAtCGM = mat4.mul(mat4.create(),
-                //     mat4.fromValues(
-                //         1, 0, 0, -camera.eye[0],
-                //         0, 1, 0, -camera.eye[1],
-                //         0, 0, 1, -camera.eye[2],
-                //         0, 0, 0, 1),
-                //     mat4.fromValues(
-                //         u[0], u[1], u[2], 0,
-                //         v[0], v[1], v[2], 0,
-                //         n[0], n[1], n[2], 0,
-                //         0, 0, 0, 1),
-                // );
-
-                // mat4.transpose(lookAtCGM, lookAtCGM);
-                lookAtGLM = camera.view; //mat4.lookAt...
-
-                const preCameraView = document.getElementById('camera.view');
-                preCameraView.innerHTML = math.interleaveMatrixStrings([
-                    mat4.toMatrixString(lookAtGLM, 4),
-                    mat4.toMatrixString(lookAtCGM, 4)
-                ]);
-
+            const invalidate = (element, valid) => {
+                element.classList.remove(valid ? 'is-invalid' : 'is-valid');
+                element.classList.add(valid ? 'is-valid' : 'is-invalid');
             }
-            {
-                const theta_y = camera.fovy * math.DEG2RAD;
-                const theta_x = camera.fovx * math.DEG2RAD;
-                console.log(camera.fovx, camera.fovy);
-                let P1 = mat4.fromValues(
-                    1.0 / Math.tan(theta_x * 0.5), 0.0, 0.0, 0.0,
-                    0.0, 1.0 / Math.tan(theta_y * 0.5), 0.0, 0.0,
-                    0.0, 0.0, 1.0, 0.0,
-                    0.0, 0.0, 0.0, 1.0
-                );
-                let f = camera.far;
-                let P2 = mat4.fromValues(
-                    1.0 / f, 0.0, 0.0, 0.0,
-                    // +1.0, 0.0, 0.0, 0.0, // gl-matrix
-                    0.0, 1.0 / f, 0.0, 0.0,
-                    // 0.0, +1.0, 0.0, 0.0, // gl-matrix
-                    0.0, 0.0, 1.0 / f, 0.0,
-                    // 0.0, 0.0, -1.0, 0.0, // gl-matrix
-                    0.0, 0.0, 0.0, +1.0
-                );
-                let n = camera.near;
-                let k = n / f; // ?
-                let P3 = mat4.fromValues(
-                    1.0, 0.0, 0.0, 0.0,
-                    0.0, 1.0, 0.0, 0.0,
-                    0.0, 0.0, 1.0 / (1.0 - k), -k / (1.0 - k),
-                    // 0.0, 0.0, (f + n) / (n - f), 2.0 * f * n / (n - f), // gl-matrix
-                    0.0, 0.0, 1.0, 0.0
-                );
+
+            textCameraEye.onchange = () => { updateCameraTest(); };
+            textCameraCenter.onchange = () => { updateCameraTest(); };
+            textCameraUp.onchange = () => { updateCameraTest(); };
+
+            numberCameraNear.onchange = () => { updateCameraTest(); };
+            numberCameraFar.onchange = () => { updateCameraTest(); };
+            numberCameraFovy.onchange = () => { updateCameraTest(); };
+            numberCameraAspect.onchange = () => { updateCameraTest(); };
+
+            const updateCameraTest = () => {
+
+                try {
+                    camera.eye = math.vec3.parse(textCameraEye.value);
+                    invalidate(textCameraEye, true);
+                } catch { invalidate(textCameraEye, false); }
+                try {
+                    camera.center = math.vec3.parse(textCameraCenter.value);
+                    invalidate(textCameraCenter, true);
+                } catch { invalidate(textCameraCenter, false); }
+                try {
+                    camera.up = math.vec3.parse(textCameraUp.value);
+                    invalidate(textCameraUp, true);
+                } catch { invalidate(textCameraUp, false); }
+                try {
+                    camera.near = parseFloat(numberCameraNear.value, 10);
+                    invalidate(numberCameraNear, true);
+                } catch { invalidate(numberCameraNear, false); }
+                try {
+                    camera.far = parseFloat(numberCameraFar.value, 10);
+                    invalidate(numberCameraFar, true);
+                } catch { invalidate(numberCameraFar, false); }
+                try {
+                    camera.fovy = parseFloat(numberCameraFovy.value, 10);
+                    invalidate(numberCameraFovy, true);
+                } catch { invalidate(numberCameraFovy, false); }
+                try {
+                    camera.aspect = parseFloat(numberCameraAspect.value, 10);
+                    invalidate(numberCameraAspect, true);
+                } catch { invalidate(numberCameraAspect, false); }
 
 
-                mat4.transpose(P1, P1);
-                mat4.transpose(P2, P2);
-                mat4.transpose(P3, P3);
+                let lookAtCGM, lookAtGLM, perspectiveCGM, perspectiveGLM, P1, P2, P3;
 
-                let perspectiveCGM = mat4.create();
-                perspectiveCGM = mat4.mul(mat4.create(), P2, P1);
-                perspectiveCGM = mat4.mul(mat4.create(), P3, perspectiveCGM);
+                {
+                    let n = vec3.subtract(vec3.create(), camera.center, camera.eye);
+                    vec3.normalize(n, n); // !
+                    let u = vec3.cross(vec3.create(), n, camera.up);
+                    vec3.normalize(u, u); // !
+                    let v = vec3.cross(vec3.create(), u, n);
+                    vec3.normalize(v, v); // !
 
-                // mat4.transpose(perspectiveCGM, perspectiveCGM);
-                const perspectiveGLM = camera.projection; // mat4.perspective...
+                    lookAtCGM = mat4.mul(mat4.create(),
+                        mat4.transpose(mat4.create(), mat4.fromValues(
+                            u[0], u[1], u[2], 0,
+                            v[0], v[1], v[2], 0,
+                            n[0], n[1], n[2], 0,
+                            0, 0, 0, 1)),
+                        mat4.transpose(mat4.create(), mat4.fromValues(
+                            1, 0, 0, -camera.eye[0],
+                            0, 1, 0, -camera.eye[1],
+                            0, 0, 1, -camera.eye[2],
+                            0, 0, 0, 1)),
+                        mat4.fromValues(
+                            1, 0, 0, 0,
+                            0, 1, 0, 0,
+                            0, 0, 1, 0,
+                            0, 0, 0, 1)
+                    );
 
-                const preCameraP123 = document.getElementById('camera.p123');
-                preCameraP123.innerHTML = math.interleaveMatrixStrings([
+                    lookAtGLM = camera.view
+                }
+
+                {
+                    const theta_y = camera.fovy * math.DEG2RAD;
+                    const theta_x = camera.fovx * math.DEG2RAD;
+
+                    P1 = mat4.fromValues(
+                        1.0 / Math.tan(theta_x * 0.5), 0.0, 0.0, 0.0,
+                        0.0, 1.0 / Math.tan(theta_y * 0.5), 0.0, 0.0,
+                        0.0, 0.0, 1.0, 0.0,
+                        0.0, 0.0, 0.0, 1.0
+                    );
+                    let f = camera.far;
+                    P2 = mat4.fromValues(
+                        1.0 / f, 0.0, 0.0, 0.0,
+                        0.0, 1.0 / f, 0.0, 0.0,
+                        0.0, 0.0, 1.0 / f, 0.0,
+                        0.0, 0.0, 0.0, +1.0
+                    );
+                    let n = camera.near;
+                    let k = n / f; // ?
+                    P3 = mat4.fromValues(
+                        1.0, 0.0, 0.0, 0.0,
+                        0.0, 1.0, 0.0, 0.0,
+                        0.0, 0.0, 1.0 / (1.0 - k), -k / (1.0 - k),
+                        0.0, 0.0, 1.0, 0.0
+                    );
+
+                    mat4.transpose(P1, P1);
+                    mat4.transpose(P2, P2);
+                    mat4.transpose(P3, P3);
+
+                    perspectiveCGM = mat4.mul(mat4.create(), P2, P1);
+                    perspectiveCGM = mat4.mul(perspectiveCGM, P3, perspectiveCGM);
+
+                    perspectiveGLM = mat4.clone(camera.projection); // mat4.perspective...
+                }
+
+                preCamera.innerHTML = `${math.interleaveMatrixStrings([
+                    vec3.toMatrixString(camera.eye, 2),
+                    vec3.toMatrixString(camera.center, 2),
+                    vec3.toMatrixString(camera.up, 2),
+                    ` \n  near = ${camera.near.toFixed(2)}`
+                    + `, far = ${camera.far.toFixed(2)},`
+                    + `\n  fovy = ${camera.fovy.toFixed(2)}°,`
+                    + `\n  aspect = ${camera.aspect.toFixed(2)} // width / height`
+                ])}`;
+
+                preCamera.innerHTML += '\n// view transform: lookAt (glm left, cgmath right)';
+                preCamera.innerHTML += '\n' + math.interleaveMatrixStrings([
+                    mat4.toMatrixString(lookAtGLM, 4),
+                    mat4.toMatrixString(lookAtCGM, 4)]);
+
+                preCamera.innerHTML += '\n// P1, P2, P3 (cgmath.cc):';
+                preCamera.innerHTML += '\n' + math.interleaveMatrixStrings([
                     mat4.toMatrixString(P1, 2),
                     mat4.toMatrixString(P2, 2),
-                    mat4.toMatrixString(P3, 2)
-                ]);
+                    mat4.toMatrixString(P3, 2)]);
 
-                const preCameraProjection = document.getElementById('camera.projection');
-                preCameraProjection.innerHTML = math.interleaveMatrixStrings([
+                preCamera.innerHTML += '\n// projection transform: perspective (glm left, cgmath right)';
+                preCamera.innerHTML += '\n' + math.interleaveMatrixStrings([
                     mat4.toMatrixString(perspectiveGLM, 4),
-                    mat4.toMatrixString(perspectiveCGM, 4)
-                ]);
+                    mat4.toMatrixString(perspectiveCGM, 4)]);
 
+                preCamera.innerHTML += '\n// view-projection transform: (glm left, cgmath right)';
+                preCamera.innerHTML += '\n' + math.interleaveMatrixStrings([
+                    mat4.toMatrixString(mat4.mul(mat4.create(), perspectiveGLM, lookAtGLM), 4),
+                    mat4.toMatrixString(mat4.mul(mat4.create(), perspectiveCGM, lookAtCGM), 4)]);
 
-
-                let v1 = math.vec4.random(); v1[3] = 1.0;
-                //let v1 = math.vec4.fromValues(0.5, 0.5, 0.5); v1[3] = 1.0;
-                math.vec4.log(v1);
-
-                //let TCGM = mat4.mul(mat4.create(), perspectiveCGM, lookAtCGM);
-                //let vtCGM = math.vec4.transformMat4(vec4.create(), v1, TCGM);
-                let vtCGM = math.vec4.transformMat4(vec4.create(), v1, lookAtCGM);
-                math.vec4.transformMat4(vtCGM, vtCGM, P1);
-                math.vec4.transformMat4(vtCGM, vtCGM, P2);
-                math.vec4.transformMat4(vtCGM, vtCGM, P3);
-
-                math.vec4.scale(vtCGM, vtCGM, 1.0 / vtCGM[3]);
-
-                let TGLM = mat4.mul(mat4.create(), perspectiveGLM, lookAtGLM);
-                let vtGLM = math.vec4.transformMat4(vec4.create(), v1, TGLM);
-
-                math.vec4.scale(vtGLM, vtGLM, 1.0 / vtGLM[3]);
-
-                console.log(math.interleaveMatrixStrings([
-                    mat4.toMatrixString(perspectiveGLM, 4),
-                    vec4.toMatrixString(v1, 4),
-                    vec4.toMatrixString(vtGLM, 4)
-                ]));
-
-                console.log(math.interleaveMatrixStrings([
-                    mat4.toMatrixString(perspectiveCGM, 4),
-                    vec4.toMatrixString(v1, 4),
-                    vec4.toMatrixString(vtCGM, 4)
-                ]));
-
-
-                let A = mat4.fromValues(
-                    1, 2, 3, 4,
-                    5, 6, 7, 8,
-                    9, 10, 11, 12,
-                    13, 14, 15, 16);
-
-                let B = mat4.fromValues(
-                    17, 18, 19, 20,
-                    21, 22, 23, 24,
-                    25, 26, 27, 28,
-                    29, 30, 31, 32);
-
-                let C = mat4.mul(mat4.create(), A, B);
-                console.log(math.interleaveMatrixStrings([
-                    mat4.toMatrixString(C, 4),
-                    mat4.toMatrixString(A, 4),
-                    mat4.toMatrixString(B, 4)
-                ]));
-            }
-
+            };
+            updateCameraTest();
         }
 
-        {
-            // formatted output test
-
-            // console.log();
-            // console.log('Random vec2, vec3, and vec4:');
-            // console.log(math.interleaveMatrixStrings([
-            //     math.vec2.toMatrixString(math.vec2.random(), 12),
-            //     math.vec3.toMatrixString(math.vec3.random(-1.0, +1.0), 10),
-            //     math.vec4.toMatrixString(math.vec4.random(-100.0, +100.0), 8)]));
-
-            // console.log('Random mat2, mat3, and mat4:');
-            // console.log(math.interleaveMatrixStrings([
-            //     math.mat2.toMatrixString(math.mat2.random(), 6),
-            //     math.mat3.toMatrixString(math.mat3.random(-1.0, +1.0), 4),
-            //     math.mat4.toMatrixString(math.mat4.random(-100.0, +100.0), 2)]));
-
-            // console.log('Random mat8x4 (2 digits):');
-            // math.logArrayAsMatrix(Float32Array.from({ length: 8 * 4 }, () => Math.random()), 8, 2);
-
-            // console.log('Random mat8x16 (4 digits):');
-            // math.logArrayAsMatrix(Float32Array.from({ length: 8 * 16 }, () => Math.random() * 2.0 - 1.0), 8, 4);
-        }
 
     };
 </script>
