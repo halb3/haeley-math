@@ -477,9 +477,9 @@ ${math.matrixStringFromArray(Float32Array.from({ length: 8 * 16 }, () => Math.ra
 
                     preResult.innerHTML = '// test1, test2, test3, test4 multiplied with view-projection: (glm left, cgmath right)';
                     preResult.innerHTML += '\n' + math.interleaveMatrixStrings([
-                        vec3.toMatrixString(result1GLM, 2), vec3.toMatrixString(result1CGM, 2), "  ",
-                        vec3.toMatrixString(result2GLM, 2), vec3.toMatrixString(result2CGM, 2), "  ",
-                        vec3.toMatrixString(result3GLM, 2), vec3.toMatrixString(result3CGM, 2), "  ",
+                        vec3.toMatrixString(result1GLM, 2), vec3.toMatrixString(result1CGM, 2), "  \n  \n ,",
+                        vec3.toMatrixString(result2GLM, 2), vec3.toMatrixString(result2CGM, 2), "  \n  \n ,",
+                        vec3.toMatrixString(result3GLM, 2), vec3.toMatrixString(result3CGM, 2), "  \n  \n ,",
                         vec3.toMatrixString(result4GLM, 2), vec4.toMatrixString(result4CGM, 2)]);
                 }
 
