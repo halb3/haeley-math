@@ -81,8 +81,8 @@
             <div class="col-12 col-lg-8">
 
                 <h2>Camera (Perspective):</h2>
-                <p>Parse vec3 from string for eye, center, and up:</p>
 
+                <p class="mb-1">Parse vec3 from string for eye, center, and up:</p>
                 <div class="row g-2 mb-2">
                     <div class="col">
                         <div class="form-floating">
@@ -132,35 +132,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="row g-2 mb-2">
-                    <div class="col">
-                        <div class="form-floating">
-                            <input type="text" class="form-control font-monospace" id="text-in-p" value="0.0, 0.0, 2.0">
-                            <label for="text-in-p"><code>p = <span class="text-muted">x,y,z</span></code></label>
-                        </div>
-                    </div>
-                </div>
 
                 <p class="mb-1">camera <code>eye</code>, <code>center</code>, and <code>up</code> as well as
                     <code>near</code>, <code>far</code>, <code>fovy</code>, and <code>aspect</code>:
                 </p>
-                <pre class="bg-light px-3 py-2 border-start" id="parsed-camera"></pre>
-                <!--
-                <p>Compare virtual camera math (gl-matrix) with math based on <a
-                        href="https://cgmath.cc/units/virtual-camera.html">cgmath.cc</a>.</p>
+                <pre class="bg-light px-3 py-2 border-start" id="pre-camera"></pre>
 
-                <p class="mb-1">camera.view (gl-matrix mat4.lookAt) left vs. cgmath lookAt (transposed) right:</p>
-                <pre class="bg-light px-3 py-2 border-start" id="camera.view"></pre>
+                <p class="mb-1">Test view-projection on four test vectors:</p>
+                <div class="row g-2 mb-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control font-monospace" id="text-test1"
+                                value="0.0, 0.0, 1.0">
+                            <label for="text-test1"><code>test1 =</code></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control font-monospace" id="text-test2"
+                                value="0.0, 0.0, 0.5">
+                            <label for="text-test2"><code>test2 =</code></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control font-monospace" id="text-test3"
+                                value="0.0, 0.0, -1.0">
+                            <label for="text-test3"><code>test3 =</code></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control font-monospace" id="text-test4"
+                                value="0.0, 0.0, 2.0">
+                            <label for="text-test4"><code>test4 =</code></label>
+                        </div>
+                    </div>
+                </div>
 
-                <p class="mb-1">camera.projection (gl-matrix mat4.perspective) left vs. cgmath projection (transposed)
-                    right:</p>
-                <pre class="bg-light px-3 py-2 border-start" id="camera.projection"></pre>
+                <p class="mb-1">results (glm left, cgmath right):</p>
+                <pre class="bg-light px-3 py-2 border-start" id="pre-result"></pre>
 
-                <p class="mb-1">cgmath projection sub-transforms (PI, PII, PIII):</p>
-                <pre class="bg-light px-3 py-2 border-start" id="camera.p123"></pre>
-
-                <p class="mb-1">cgmath projection sub-transforms (PI, PII, PIII):</p>
-                <pre class="bg-light px-3 py-2 border-start" id="camera.p123"></pre> -->
 
             </div>
         </div>
@@ -205,6 +217,7 @@
 
             const preColumnsDigits = document.getElementById('columns-and-digits');
             const test = math.mat4.random(-16.0, +16.0);
+            const testEdgeCases = new Float32Array([-0.0, +0.0, NaN, Infinity, -Infinity]);
 
             const rangeColumns = document.getElementById('range-columns');
             const numberColumns = document.getElementById('number-columns');
@@ -217,7 +230,10 @@
                 preColumnsDigits.innerHTML =
                     `// haeley.math.matrixStringFromArray([...], ${columns}, ${digits}):\n`
                     + math.matrixStringFromArray(
-                        test, parseInt(rangeColumns.value, 10), parseInt(rangeDigits.value, 10));
+                        test, parseInt(rangeColumns.value, 10), parseInt(rangeDigits.value, 10)) +
+                    `\n// some edge cases:\n`
+                    + math.matrixStringFromArray(
+                        testEdgeCases, parseInt(rangeColumns.value, 10), parseInt(rangeDigits.value, 10));
             };
             updateColumnsAndDigits();
 
@@ -267,27 +283,36 @@ ${math.matrixStringFromArray(Float32Array.from({ length: 8 * 16 }, () => Math.ra
             const vec4 = math.vec4;
             const mat4 = math.mat4;
 
+            let test1 = vec3.create();
+            let test2 = vec3.create();
+            let test3 = vec3.create();
+            let test4 = vec3.create();
+
             const camera = new math.Camera();
-            camera.eye = [0.0, 0.0, 0.0]; // [2.0, 0.5, -4.0];
-            camera.center = [0.0, 0.0, 1.0]; // [0.0, -0.5, 2.0];
-            camera.up = [0.0, 1.0, 0.0]; //[0.0, 2.0, 0.0];
+            camera.eye = [0.0, 0.0, 0.0];
+            camera.center = [0.0, 0.0, 1.0];
+            camera.up = [0.0, 1.0, 0.0];
             camera.near = 0.5;
             camera.far = 1.0;
             camera.aspect = 16.0 / 9.0;
-            let p = [1.0, 1.0, 1.0];
 
             window['camera'] = camera;
 
-            const preCamera = document.getElementById('parsed-camera');
+            const preCamera = document.getElementById('pre-camera');
+            const preResult = document.getElementById('pre-result');
             const textCameraEye = document.getElementById('text-eye');
             const textCameraCenter = document.getElementById('text-center');
             const textCameraUp = document.getElementById('text-up');
-            const textInputP = document.getElementById('text-in-p');
 
             const numberCameraNear = document.getElementById('number-near');
             const numberCameraFar = document.getElementById('number-far');
             const numberCameraFovy = document.getElementById('number-fovy');
             const numberCameraAspect = document.getElementById('number-aspect');
+
+            const textTest1 = document.getElementById('text-test1');
+            const textTest2 = document.getElementById('text-test2');
+            const textTest3 = document.getElementById('text-test3');
+            const textTest4 = document.getElementById('text-test4');
 
             const invalidate = (element, valid) => {
                 element.classList.remove(valid ? 'is-invalid' : 'is-valid');
@@ -297,50 +322,44 @@ ${math.matrixStringFromArray(Float32Array.from({ length: 8 * 16 }, () => Math.ra
             textCameraEye.onchange = () => { updateCameraTest(); };
             textCameraCenter.onchange = () => { updateCameraTest(); };
             textCameraUp.onchange = () => { updateCameraTest(); };
-            textInputP.onchange = () => { updateCameraTest(); };
 
             numberCameraNear.onchange = () => { updateCameraTest(); };
             numberCameraFar.onchange = () => { updateCameraTest(); };
             numberCameraFovy.onchange = () => { updateCameraTest(); };
             numberCameraAspect.onchange = () => { updateCameraTest(); };
 
+            textTest1.onchange = () => { updateCameraTest(); };
+            textTest2.onchange = () => { updateCameraTest(); };
+            textTest3.onchange = () => { updateCameraTest(); };
+            textTest4.onchange = () => { updateCameraTest(); };
+
+
             const updateCameraTest = () => {
 
-                try {
-                    camera.eye = math.vec3.parse(textCameraEye.value);
-                    invalidate(textCameraEye, true);
-                } catch { invalidate(textCameraEye, false); }
-                try {
-                    camera.center = math.vec3.parse(textCameraCenter.value);
-                    invalidate(textCameraCenter, true);
-                } catch { invalidate(textCameraCenter, false); }
-                try {
-                    camera.up = math.vec3.parse(textCameraUp.value);
-                    invalidate(textCameraUp, true);
-                } catch { invalidate(textCameraUp, false); }
-                try {
-                    let parseResult = math.vec3.parse(textInputP.value);
-                    if (parseResult == undefined) throw "undefined";
-                    p = parseResult;
-                    invalidate(textInputP, true);
-                } catch { invalidate(textInputP, false); }
-                try {
-                    camera.near = parseFloat(numberCameraNear.value, 10);
-                    invalidate(numberCameraNear, true);
-                } catch { invalidate(numberCameraNear, false); }
-                try {
-                    camera.far = parseFloat(numberCameraFar.value, 10);
-                    invalidate(numberCameraFar, true);
-                } catch { invalidate(numberCameraFar, false); }
-                try {
-                    camera.fovy = parseFloat(numberCameraFovy.value, 10);
-                    invalidate(numberCameraFovy, true);
-                } catch { invalidate(numberCameraFovy, false); }
-                try {
-                    camera.aspect = parseFloat(numberCameraAspect.value, 10);
-                    invalidate(numberCameraAspect, true);
-                } catch { invalidate(numberCameraAspect, false); }
+                const parse3f = (target, element) => {
+                    let value = math.vec3.parse(element.value);
+                    invalidate(element, undefined !== value);
+                    return undefined === value ? target : value;
+                }
+                const parse1f = (target, element) => {
+                    let value = parseFloat(element.value, 10);
+                    invalidate(element, undefined !== value);
+                    return undefined === value ? target : value;
+                }
 
+                camera.eye = parse3f(camera.eye, textCameraEye);
+                camera.center = parse3f(camera.center, textCameraCenter);
+                camera.up = parse3f(camera.up, textCameraUp);
+
+                camera.near = parse1f(camera.near, numberCameraNear);
+                camera.far = parse1f(camera.far, numberCameraFar);
+                camera.fovy = parse1f(camera.fovy, numberCameraFovy);
+                camera.aspect = parse1f(camera.aspect, numberCameraAspect);
+
+                test1 = parse3f(test1, textTest1);
+                test2 = parse3f(test2, textTest2);
+                test3 = parse3f(test3, textTest3);
+                test4 = parse3f(test4, textTest4);
 
                 let lookAtCGM, lookAtGLM, perspectiveCGM, perspectiveGLM, P1, P2, P3, vtCGM, vtGLM;
 
@@ -402,15 +421,6 @@ ${math.matrixStringFromArray(Float32Array.from({ length: 8 * 16 }, () => Math.ra
                     perspectiveCGM = mat4.mul(perspectiveCGM, P3, perspectiveCGM);
 
                     perspectiveGLM = mat4.clone(camera.projection); // mat4.perspective...
-
-                    let p1 = math.vec4.fromValues(p[0], p[1], p[2], 1.0);
-                    vtCGM = math.vec4.transformMat4(vec4.create(), p1, mat4.mul(mat4.create(), perspectiveCGM, lookAtCGM));
-                    vtCGM = math.vec4.scale(math.vec4.create(), vtCGM, 1.0 / vtCGM[3]);
-                    vtGLM = math.vec4.transformMat4(vec4.create(), p1, mat4.mul(mat4.create(), perspectiveGLM, lookAtGLM));
-                    vtGLM = math.vec4.scale(math.vec4.create(), vtGLM, 1.0 / vtGLM[3]);
-
-
-
                 }
 
                 preCamera.innerHTML = `${math.interleaveMatrixStrings([
@@ -444,10 +454,34 @@ ${math.matrixStringFromArray(Float32Array.from({ length: 8 * 16 }, () => Math.ra
                     mat4.toMatrixString(mat4.mul(mat4.create(), perspectiveGLM, lookAtGLM), 4),
                     mat4.toMatrixString(mat4.mul(mat4.create(), perspectiveCGM, lookAtCGM), 4)]);
 
-                preCamera.innerHTML += '\n// transformed p: (glm left, cgmath right)';
-                preCamera.innerHTML += '\n' + math.interleaveMatrixStrings([
-                    vec3.toMatrixString(vtGLM, 2),
-                    vec3.toMatrixString(vtCGM, 2)]);
+                {
+                    const viewProjectionCGM = mat4.mul(mat4.create(), perspectiveCGM, lookAtCGM);
+                    const result1CGM = vec3.fromVec4(vec4.transformMat4(vec4.create(),
+                        vec4.fromVec3(test1), viewProjectionCGM));
+                    const result2CGM = vec3.fromVec4(vec4.transformMat4(vec4.create(),
+                        vec4.fromVec3(test2), viewProjectionCGM));
+                    const result3CGM = vec3.fromVec4(vec4.transformMat4(vec4.create(),
+                        vec4.fromVec3(test3), viewProjectionCGM));
+                    const result4CGM = vec3.fromVec4(vec4.transformMat4(vec4.create(),
+                        vec4.fromVec3(test4), viewProjectionCGM));
+
+                    const viewProjectionGLM = mat4.mul(mat4.create(), perspectiveGLM, lookAtGLM);
+                    const result1GLM = vec3.fromVec4(vec4.transformMat4(vec4.create(),
+                        vec4.fromVec3(test1), viewProjectionGLM));
+                    const result2GLM = vec3.fromVec4(vec4.transformMat4(vec4.create(),
+                        vec4.fromVec3(test2), viewProjectionGLM));
+                    const result3GLM = vec3.fromVec4(vec4.transformMat4(vec4.create(),
+                        vec4.fromVec3(test3), viewProjectionGLM));
+                    const result4GLM = vec3.fromVec4(vec4.transformMat4(vec4.create(),
+                        vec4.fromVec3(test4), viewProjectionGLM));
+
+                    preResult.innerHTML = '// test1, test2, test3, test4 multiplied with view-projection: (glm left, cgmath right)';
+                    preResult.innerHTML += '\n' + math.interleaveMatrixStrings([
+                        vec3.toMatrixString(result1GLM, 2), vec3.toMatrixString(result1CGM, 2), "  ",
+                        vec3.toMatrixString(result2GLM, 2), vec3.toMatrixString(result2CGM, 2), "  ",
+                        vec3.toMatrixString(result3GLM, 2), vec3.toMatrixString(result3CGM, 2), "  ",
+                        vec3.toMatrixString(result4GLM, 2), vec4.toMatrixString(result4CGM, 2)]);
+                }
 
             };
             updateCameraTest();

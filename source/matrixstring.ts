@@ -20,9 +20,12 @@ export function matrixStringFromArray(a: Float32Array, cols: number, digits: num
 
     for (let i = 0; i < colsClamped; ++i) {
         const column = a.filter((value, index) => (index % colsClamped) === i);
-        const max = column.map((v) => Math.abs(v)).reduce((c, p) => Math.max(c, p));
-        paddings[i] = Math.max(1, Math.ceil(Math.log10(max)))
-            + digitsClamped + clamp(digitsClamped + 1, 1, 2);
+
+        const strLengths = column.map((v) => isNaN(v) ? 4 : !isFinite(v) ? 9 :
+            Math.max(1, Math.ceil(Math.log10(Math.abs(v))))
+            + digitsClamped + clamp(digitsClamped + 1, 1, 2));
+        paddings[i] = strLengths.reduce((p, c) => Math.max(p, c));
+
         column.forEach((value, index) => strings[index * colsClamped + i] =
             value.toFixed(digitsClamped));
     }
@@ -33,14 +36,14 @@ export function matrixStringFromArray(a: Float32Array, cols: number, digits: num
     const blanks = paddings.reduce((a, v) => a + v) + paddings.length - 1;
     const rows = Math.ceil(a.length / colsClamped);
 
-    let matstr = '';
-    matstr += ' ╭ ' + ' '.repeat(blanks) + ' ╮\n';
+    let matString = '';
+    matString += ' ╭ ' + ' '.repeat(blanks) + ' ╮\n';
     for (let i = 0; i < rows; ++i) {
-        matstr += ` │ ${strings.splice(0, colsClamped).join(' ')} │\n`;
+        matString += ` │ ${strings.splice(0, colsClamped).join(' ')} │\n`;
     }
-    matstr += ' ╰ ' + ' '.repeat(blanks) + ' ╯';
+    matString += ' ╰ ' + ' '.repeat(blanks) + ' ╯';
 
-    return matstr;
+    return matString;
 }
 
 export function interleaveMatrixStrings(strings: Array<string>): string {

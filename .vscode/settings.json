@@ -75,6 +75,7 @@
         "exts",
         "fbos",
         "fontface",
+        "fovx",
         "fovy",
         "fract",
         "framebuffer",
