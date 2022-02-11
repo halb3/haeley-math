@@ -1,5 +1,5 @@
 
-import { log, LogLevel, assert } from 'haeley-auxiliaries';
+import { log, LogLevel, assert } from '@haeley/auxiliaries';
 
 import { vec3 } from './vec3';
 import { vec4 } from './vec4';

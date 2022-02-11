@@ -1,16 +1,16 @@
 {
-    "name": "haeley-math",
+    "name": "@haeley/math",
     "version": "0.3.0",
     "license": "MIT",
     "description": "gl-matrix extension providing useful math for the haeley real-time rendering framework.",
     "author": "Daniel Limberger",
-    "main": "dist/haeley-math.umd.js",
+    "main": "dist/math.umd.js",
     "types": "dist/index.d.ts",
     "exports": {
-        "import": "./dist/haeley-math.es.js",
-        "require": "./dist/haeley-math.umd.js"
+        "import": "./dist/math.es.js",
+        "require": "./dist/math.umd.js"
     },
-    "module": "dist/haeley-math.es.js",
+    "module": "dist/math.es.js",
     "files": [
         "dist/*",
         "source/**/*.ts",
@@ -18,11 +18,11 @@
     ],
     "bugs": {
         "email": "cgdaniel@outlook.com",
-        "url": "https://github.com/halb3/haeley-math/issues"
+        "url": "https://github.com/halb3/math/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/halb3/haeley-math.git"
+        "url": "git+https://github.com/halb3/math.git"
     },
     "maintainers": [
         {
@@ -53,9 +53,8 @@
         "vite": "^2.7.6"
     },
     "dependencies": {
-        "gl-matrix": "^3.4.3",
-        "haeley-auxiliaries": "^0.3.2",
-        "haeley-math": "^0.2.1"
+        "@haeley/auxiliaries": "^0.3.4",
+        "gl-matrix": "^3.4.3"
     },
     "scripts": {
         "build": "vite build && tsc --emitDeclarationOnly",

@@ -1,7 +1,7 @@
 
 /* spellchecker: disable */
 
-import { log, LogLevel } from 'haeley-auxiliaries';
+import { Alterable, log, LogLevel, Serializable } from '@haeley/auxiliaries';
 
 import { vec3 } from './vec3';
 import { mat4, m4 } from './mat4';
@@ -18,7 +18,7 @@ import { duplicate2, GLsizei2 } from './tuples';
  * matrices are invalidated and recalculated only once and only when requested. Please note that eye denotes the
  * position in a virtual 3D scene and center denotes the position which is being looked at.
  */
-export class Camera {
+export class Camera implements Serializable, Alterable {
 
     private static readonly DEFAULT_EYE: vec3 = vec3.fromValues(0.0, 0.0, 1.0);
     private static readonly DEFAULT_CENTER: vec3 = vec3.fromValues(0.0, 0.0, 0.0);
@@ -28,7 +28,6 @@ export class Camera {
 
     private static readonly DEFAULT_NEAR = 2.0;
     private static readonly DEFAULT_FAR = 8.0;
-
 
     /** @see {@link eye} */
     protected _eye: vec3;
@@ -73,8 +72,12 @@ export class Camera {
     /** @see {@link postViewProjection} */
     protected _postViewProjection: mat4 | undefined;
 
-    /** @see {@link altered} */
-    protected _altered = false;
+    /** @see {@link altered}. To improve camera performance, as much as possible, no ChangeLookup is used here. */
+    protected _altered: boolean = false;
+    // protected _altered = Object.assign(new ChangeLookup(), {
+    //     any: false, eye: false, center: false, up: false,
+    //     fovy: false, near: false, far: false
+    // });
 
 
     /**
@@ -101,7 +104,6 @@ export class Camera {
         this._up = up ? vec3.clone(up) : vec3.clone(Camera.DEFAULT_UP);
     }
 
-
     /**
      * Invalidates derived matrices, i.e., view, projection, and view-projection. The view should be invalidated on
      * eye, center, and up changes. The projection should be invalidated on fovy, viewport, near, and far changes.
@@ -122,6 +124,43 @@ export class Camera {
             this._viewProjectionInverse = undefined;
         }
         this._altered = true;
+    }
+
+    /* Implement Serializable Interface */
+
+    /**
+     * Serializes the non-computed and not-view related aspects of the camera.
+     * @returns - JSON string containing eye, center, up, fovy, near, and far.
+     */
+    serialize(): string {
+        return JSON.stringify({
+            eye: this._eye, center: this._center, up: this._up,
+            fovy: this._fovy, near: this._near, far: this._far
+        }, (key, value) => value instanceof Float32Array ?
+            Array.from(value) : value);
+    }
+
+    /**
+     * Parse serialized camera properties. Note that only eye, center, up, fovy, near, and far are
+     * restored (when found within the given text).
+     * @param text - JSON as string to parse serialized camera properties from.
+     */
+    deserialize(text: string): void {
+        const object = JSON.parse(text);
+        let [invalidateView, invalidateProjection] = [false, false];
+        Object.keys(object).forEach((key) => {
+            switch (key) {
+                case 'eye' || 'center' || 'up':
+                    this[`_${key}`] = vec3.clone(object[key]);
+                    invalidateView = true;
+                    break;
+                case 'fovy' || 'near' || 'far':
+                    this[`_${key}`] = Number.parseFloat(object[key]);
+                    invalidateProjection = true;
+                    break;
+            }
+        });
+        this.invalidate(invalidateView, invalidateProjection);
     }
 
     /**
@@ -421,15 +460,12 @@ export class Camera {
      * Whether or not any other public property has changed. Please note that the alteration status is detached from
      * caching state of lazily computed properties.
      */
-    get altered(): boolean {
-        return this._altered;
-    }
-
-    /**
-     * Intended for resetting alteration status.
-     */
-    set altered(status: boolean) {
-        this._altered = status;
+    altered(clear: boolean = false): boolean {
+        const result = this._altered;
+        if (clear) {
+            this._altered = false;
+        }
+        return result;
     }
 
 }

@@ -1,7 +1,7 @@
 
 /* spellchecker: disable */
 
-import { log, logIf, LogLevel } from 'haeley-auxiliaries';
+import { log, logIf, LogLevel } from '@haeley/auxiliaries';
 
 import { clamp } from './auxiliaries';
 

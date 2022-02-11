@@ -17,15 +17,15 @@ export default defineConfig(({ mode }) => {
             outDir,
             lib: {
                 entry: resolve(root, 'index.ts'),
-                name: 'haeley-math',
+                name: 'haeley.math',
                 formats: ['cjs', 'umd', 'es'],
             },
             sourcemap: 'hidden',
             rollupOptions: {
-                external: ['haeley-auxiliaries'],
+                external: ['@haeley/auxiliaries'],
                 output: {
                     globals: {
-                        'haeley-auxiliaries': 'haeley.auxiliaries'
+                        '@haeley/auxiliaries': 'haeley.auxiliaries'
                     }
                 }
             }

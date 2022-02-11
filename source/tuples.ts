@@ -1,7 +1,7 @@
 
 /* spellchecker: disable */
 
-import { assert, logIf, LogLevel } from 'haeley-auxiliaries';
+import { assert, logIf, LogLevel } from '@haeley/auxiliaries';
 
 import { vec2 } from './vec2';
 import { vec3 } from './vec3';
