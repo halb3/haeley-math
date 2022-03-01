@@ -24,7 +24,9 @@ export default defineConfig(({ mode }) => {
             },
             sourcemap: 'hidden',
             rollupOptions: {
-                external: ['@haeley/auxiliaries'],
+                external: [
+                    '@haeley/auxiliaries'
+                ],
                 output: {
                     globals: {
                         '@haeley/auxiliaries': 'haeley.auxiliaries'
