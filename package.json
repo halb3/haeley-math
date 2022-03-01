@@ -53,7 +53,7 @@
         "vite": "^2.8.1"
     },
     "dependencies": {
-        "@haeley/auxiliaries": "^0.3.4",
+        "@haeley/auxiliaries": "github:halb3/auxiliaries",
         "gl-matrix": "^3.4.3"
     },
     "scripts": {
@@ -65,6 +65,7 @@
         "coverage": "nyc report --reporter=text-lcov | coveralls",
         "postversion": "git push && git push --tags",
         "prepack": "npm run preversion",
+        "prepare": "npm run build",
         "preversion": "npm install && npm run build && npm run test"
     },
     "keywords": [
