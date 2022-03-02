@@ -196,6 +196,9 @@
     import * as auxiliaries from '@haeley/auxiliaries';
     import * as math from './index.ts';
     window['haeley'] = { auxiliaries, math };
+
+    console.log("'haeley' imported:", haeley);
+
 </script>
 
 <script>
@@ -209,9 +212,6 @@
         document.querySelector('#branch').innerHTML = math.branch();
         document.querySelector('#commit').innerHTML = math.commit();
         document.querySelector('#cryear').innerHTML = new Date().getFullYear();
-
-        console.log("'haeley-math' imported:", haeley);
-
 
         {   // interactive array to matrix test
 
