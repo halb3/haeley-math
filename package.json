@@ -50,7 +50,7 @@
         "ts-loader": "^9.2.6",
         "ts-node": "^10.4.0",
         "typescript": "^4.5.4",
-        "vite": "^2.8.1"
+        "vite": "^2.9.13"
     },
     "dependencies": {
         "@haeley/auxiliaries": "github:halb3/auxiliaries",
